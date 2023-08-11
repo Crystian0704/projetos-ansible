@@ -1,0 +1,21 @@
+---
+# tasks file for vagrant_provision
+- name: Define o caminho para salvar as configurações da VM
+  set_fact:
+    vm_provision_path: "{{ lookup('env', 'HOME') }}/vms/{{ vm_provision_name }}"
+
+- name: Cria o diretório para salvar as configurações da VM
+  file:
+    path: "{{ vm_provision_path }}"
+    state: directory
+
+- name: Cria o arquivo Vagrantfile
+  template:
+    src: Vagrantfile.j2
+    dest: "{{ vm_provision_path }}/Vagrantfile"
+
+- name: Provisiona VM
+  command: vagrant up
+  args:
+    chdir: "{{ vm_provision_path }}"
+  become: yes
