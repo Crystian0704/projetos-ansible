@@ -9,6 +9,19 @@
     path: "{{ vm_provision_path }}"
     state: directory
 
+- name: Destroi VMs existentes
+  command: vagrant destroy -f
+  args:
+    chdir: "{{ vm_provision_path }}"
+  become: yes
+  ignore_errors: yes
+
+- name: Remove .vagrant
+  file:
+    path: "{{ vm_provision_path }}/.vagrant"
+    state: absent
+  become: yes
+
 - name: Cria o arquivo Vagrantfile
   template:
     src: Vagrantfile.j2
@@ -18,4 +31,3 @@
   command: vagrant up
   args:
     chdir: "{{ vm_provision_path }}"
-  become: yes

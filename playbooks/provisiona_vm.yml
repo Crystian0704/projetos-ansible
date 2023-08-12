@@ -2,7 +2,6 @@
 - name: Executa roles para criação de VMs
   hosts: localhost
   connection: local
-  gather_facts: no
   roles:
     - role: vagrant_install
       tags: install

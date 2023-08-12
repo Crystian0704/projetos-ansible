@@ -1,21 +1,27 @@
 ---
 # tasks file for vagrant
+- name: Instalação Vagrant com libvirt
+  block:
+  - name: Atualiza o repositório
+    apt: update_cache=no
+    become: yes
 
-- name: Atualiza o repositório
-  apt: update_cache=no
-  become: yes
+  - name: Remove vagrant-libvirt
+    apt:
+      name: vagrant-libvirt
+      state: absent
 
-- name: Instala dependências
-  apt:
-    name:
-      - qemu
-      - libvirt-daemon-system
-      - ebtables
-      - libguestfs-tools
-      - vagrant
-      - ruby-fog-libvirt
-      - nfs-kernel-server
-    state: present
+  - name: Instala dependências
+    apt:
+      name:
+        - qemu
+        - libvirt-daemon-system
+        - ebtables
+        - libguestfs-tools
+        - vagrant
+        - ruby-fog-libvirt
+        - nfs-kernel-server
+      state: present
 
 - name: Habilita o serviço libvirtd
   service:
