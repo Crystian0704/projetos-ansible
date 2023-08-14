@@ -3,6 +3,7 @@
 vm_provision_numbers: 1
 vm_provision_name: debian
 vm_provision_box: debian/bookworm64
-vm_provision_cidr_ip: 192.168.111 #format ip xxx.xxx.xxx
+vm_provision_cidr_ip: 192.168.121 #format ip xxx.xxx.xxx
 vm_provision_memory: 1024
 vm_provision_cpus: 1
+vm_provision_ssh_key_path: "{{ lookup('env', 'HOME') }}/.ssh/id_ed25519.pub"

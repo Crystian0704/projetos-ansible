@@ -4,11 +4,12 @@ version = ""
 description = ""
 authors = [
     {name = "capereira", email = "ti11@casajoka.com.br"},
+    {name = "", email = ""},
 ]
 dependencies = [
     "ansible>=8.2.0",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
 

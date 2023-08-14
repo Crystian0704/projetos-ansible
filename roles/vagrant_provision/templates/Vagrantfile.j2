@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
       end
       node.vm.provision "shell", inline: <<-SHELL
         mkdir -p /home/vagrant/.ssh
-        echo "chave publica" >> /home/vagrant/.ssh/authorized_keys
+        echo "{{ vm_provision_ssh_key }}" >> /home/vagrant/.ssh/authorized_keys
       SHELL
     end
   end

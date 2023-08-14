@@ -8,6 +8,7 @@
   file:
     path: "{{ vm_provision_path }}"
     state: directory
+    
 
 - name: Destroi VMs existentes
   command: vagrant destroy -f
@@ -21,6 +22,10 @@
     path: "{{ vm_provision_path }}/.vagrant"
     state: absent
   become: yes
+
+- name: Copia chave como uma variável
+  set_fact:
+    vm_provision_ssh_key: "{{ lookup('file', vm_provision_ssh_key_path) }}"
 
 - name: Cria o arquivo Vagrantfile
   template:
