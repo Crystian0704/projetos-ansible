@@ -1,0 +1,25 @@
+ cluster_addr  = "http://{{ ansible_host }}:8201"
+          api_addr      = "http://{{ ansible_host }}:8200"
+          disable_mlock = true
+          ui = true
+
+          listener "tcp" {
+            address        = "0.0.0.0:8200"
+            cluster_adress = "{{ ansible_host }}"
+            tls_disable    = "true"
+          }
+
+          storage "raft" {
+            path    = "/opt/vault/data/"
+            node_id = "raft_node_{{ ansible_host.split('.')[-1] }}"
+
+            retry_join {
+              leader_api_addr = "http://{{ hostvars[groups['vault'][0]]['ansible_host'] }}":8200"
+            }
+            retry_join {
+              leader_api_addr = "http://{{ hostvars[groups['vault'][1]]['ansible_host'] }}:8200"
+            }
+            retry_join {
+              leader_api_addr = "http://{{ hostvars[groups['vault'][2]]['ansible_host'] }}:8200"
+            }
+          }

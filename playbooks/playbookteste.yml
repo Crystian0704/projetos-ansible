@@ -1,0 +1,8 @@
+---
+- name: Get Host Details
+  hosts: vault
+  gather_facts: no
+  tasks:
+    - name: Display host details
+      debug:
+        msg: "IP: {{ ansible_host }}, Hostname: {{ ansible_hostname }}"
