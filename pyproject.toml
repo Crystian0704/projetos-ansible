@@ -3,7 +3,7 @@ name = ""
 version = ""
 description = ""
 authors = [
-    {name = "capereira", email = "ti11@casajoka.com.br"},
+    {name = "Crystian", email = "crystian.alexsander@gmail.com"},
     {name = "", email = ""},
 ]
 dependencies = [
