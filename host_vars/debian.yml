@@ -1,6 +1,8 @@
 item: 
   - git
-  - neovim
-
-item_install_recommends:
   - i3
+  - rofi
+  - tmux
+  - pass
+  - xdotool
+  

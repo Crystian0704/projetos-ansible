@@ -1,0 +1,8 @@
+#!/bin/bash
+
+ITEM="$(cd ~/.password-store && find . -name \*.gpg | sed -e 's/^\.\///' -e 's/\.gpg$//' | rofi -dmenu -p '')"
+if [ -z "$ITEM" ]; then exit 0; fi
+
+sleep 0.2
+
+xdotool type "$(pass $ITEM)"

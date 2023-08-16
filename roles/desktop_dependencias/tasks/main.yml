@@ -10,15 +10,8 @@
     autoclean: yes
     state: latest
   become: yes
-  tags: [debian, update]
 
 - name: Instala pacotes
   apt:
     name: "{{ item }}"
     state: latest
-
-- name: Instala pacotes minimos
-  apt:
-    name: "{{ item_install_recommends }}"
-    state: latest
-    install_recommends: no
