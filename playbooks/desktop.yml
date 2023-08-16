@@ -1,0 +1,5 @@
+- name: Executa as roles para configuração do desktop
+  hosts: debian
+  become: yes
+  roles:
+    - desktop_dependencias

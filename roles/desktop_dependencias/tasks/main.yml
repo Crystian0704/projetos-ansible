@@ -1,0 +1,24 @@
+---
+# tasks file for desktop_dependencias
+- name: Atualiza debian 
+  apt:
+    update_cache: yes
+    upgrade: yes
+    cache_valid_time: 3600
+    force_apt_get: yes
+    autoremove: yes
+    autoclean: yes
+    state: latest
+  become: yes
+  tags: [debian, update]
+
+- name: Instala pacotes
+  apt:
+    name: "{{ item }}"
+    state: latest
+
+- name: Instala pacotes minimos
+  apt:
+    name: "{{ item_install_recommends }}"
+    state: latest
+    install_recommends: no

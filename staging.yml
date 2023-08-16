@@ -8,11 +8,16 @@ all:
       ansible_host: 192.168.121.3
       ansible_user: vagrant
       ansible_hostname: vault2
-
     vault3:
       ansible_host: 192.168.121.4
       ansible_user: vagrant
       ansible_hostname: vault3
+
+    debian:
+      ansible_host: 192.168.122.168
+      ansible_user: root
+      ansible_hostname: debian
+
   children:
     vault:
       hosts:

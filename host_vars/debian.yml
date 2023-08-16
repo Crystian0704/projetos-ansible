@@ -1,0 +1,6 @@
+item: 
+  - git
+  - neovim
+
+item_install_recommends:
+  - i3
