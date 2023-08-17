@@ -3,11 +3,6 @@
 - name: Atualiza debian 
   apt:
     update_cache: yes
-    upgrade: yes
-    cache_valid_time: 3600
-    force_apt_get: yes
-    autoremove: yes
-    autoclean: yes
     state: latest
   become: yes
 
@@ -15,3 +10,42 @@
   apt:
     name: "{{ item }}"
     state: latest
+  become: yes
+
+- name: Instala terminal st
+  block:
+  - name: Baixa codigo fonte
+    git:
+      repo: https://git.suckless.org/st
+      dest: /tmp/st
+    
+  - name: Compila e Instala
+    command: make
+    args:
+      chdir: /tmp/st
+    become: yes
+
+  - name: Copia binarios
+    copy:
+      src: /tmp/st/st
+      dest: /usr/local/bin/st
+      mode: 0755
+
+- name: Copia configuração do i3
+  copy:
+    src: i3_config
+    dest: ~/.config/i3/config
+    mode: 0644
+
+- name: Copia configuração do tmux
+  copy:
+    src: tmux_config
+    dest: ~/.tmux.conf
+    mode: 0644
+
+- name: Copia script passrofi para /usr/local/bin e da permissão de execução
+  copy:
+    src: passrofi
+    dest: /usr/local/bin/passrofi
+    mode: 0755
+  become: yes
