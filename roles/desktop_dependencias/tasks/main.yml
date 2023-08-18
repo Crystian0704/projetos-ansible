@@ -1,51 +1,88 @@
 ---
 # tasks file for desktop_dependencias
-- name: Atualiza debian 
-  apt:
-    update_cache: yes
-    state: latest
-  become: yes
-
 - name: Instala pacotes
   apt:
     name: "{{ item }}"
     state: latest
   become: yes
 
-- name: Instala terminal st
-  block:
-  - name: Baixa codigo fonte
-    git:
-      repo: https://git.suckless.org/st
-      dest: /tmp/st
-    
-  - name: Compila e Instala
-    command: make
-    args:
-      chdir: /tmp/st
-    become: yes
+- name: Instala Google Chrome
+  apt:
+    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    state: present
+  become: yes
 
-  - name: Copia binarios
-    copy:
-      src: /tmp/st/st
-      dest: /usr/local/bin/st
-      mode: 0755
+- name: Instala VScode
+  apt:
+    deb: https://go.microsoft.com/fwlink/?LinkID=760868
+    state: present
+  become: yes
+
+- name: Configura usuário sudo
+  shell: "echo '{{ user }} ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers"
+
+
+
+- name: Cria diretório .config/i3
+  file:
+    path: /home/{{ user }}/.config/i3
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0744
+
+- name: Cria diretório .config/rofi
+  file:
+    path: /home/{{ user }}/.config/rofi
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0744
+
+- name: Cria diretório .config/kitty
+  file:
+    path: /home/{{ user }}/.config/kitty
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0744
+
+- name: Copia os tema para o rofi
+  copy:
+    src: rofi_theme
+    dest: /home/{{ user }}/.config/rofi/arthur.rasi
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0744
 
 - name: Copia configuração do i3
   copy:
     src: i3_config
-    dest: ~/.config/i3/config
-    mode: 0644
+    dest: /home/{{ user }}/.config/i3/config
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0744
+
+- name: Copia configuração do kitty
+  copy:
+    src: kitty_conf
+    dest: /home/{{ user }}/.config/kitty/kitty.conf
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0744
 
 - name: Copia configuração do tmux
   copy:
     src: tmux_config
-    dest: ~/.tmux.conf
-    mode: 0644
+    dest: /home/{{ user }}/.tmux.conf
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0744
 
 - name: Copia script passrofi para /usr/local/bin e da permissão de execução
   copy:
     src: passrofi
     dest: /usr/local/bin/passrofi
-    mode: 0755
-  become: yes
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0744
