@@ -8,7 +8,7 @@
       name: unzip
       state: present
 
-  - name: Criar diretórios do Vault e arquivo PID
+  - name: Cria diretórios do Vault e arquivo PID
     file:
       path: "{{ item }}"
       state: directory
@@ -17,23 +17,23 @@
       - /opt/vault/data/
       - /run/vault/
 
-  - name: Criar arquivo PID do Vault
+  - name: Cria arquivo PID do Vault
     file:
       path: /run/vault/vault.pid
       state: touch
 
-  - name: Baixar o Vault
+  - name: Baixa o Vault
     get_url:
       url: "https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip"
       dest: /tmp/vault.zip
 
-  - name: Descompactar o arquivo do Vault
+  - name: Descompacta o arquivo do Vault
     unarchive:
       src: /tmp/vault.zip
       dest: /tmp/
       remote_src: yes
 
-  - name: Mover o binário do Vault
+  - name: Move o binário do Vault
     command: mv /tmp/vault /usr/local/bin/
 
   - name: Criar usuário do Vault
@@ -43,7 +43,7 @@
       home: /etc/vault
     
 
-  - name: Alterar permissões dos diretórios do Vault
+  - name: Altera permissões dos diretórios do Vault
     file:
       path: "{{ item }}"
       owner: vault
@@ -53,7 +53,7 @@
       - /etc/vault/
       - /opt/vault/data/
 
-  - name: Criar arquivo de configuração do Vault
+  - name: Cria arquivo de configuração do Vault
     template:
       src: vault.hcl.j2
       dest: /etc/vault/vault.hcl

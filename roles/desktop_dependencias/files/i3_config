@@ -1,13 +1,16 @@
 set $mod Mod4
 
 # Font for window titles
-font pango:monospace 12
+font pango:monospace 10
 
 # Start XDG autostart .desktop files using dex. See also
 exec --no-startup-id dex --autostart --environment i3
 
 # Start applications pass with rofi
 bindsym $mod+y exec passrofi
+
+# Lock screen
+bindsym $mod+o exec --no-startup-id i3lock 
 
 # Execute rofi
 bindsym $mod+p exec rofi -show run -theme ~/.config/rofi/arthur.rasi
