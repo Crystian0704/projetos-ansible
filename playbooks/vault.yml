@@ -1,6 +1,7 @@
 ---
 - name: Executa roles para instalação e configuração do Vault Hashicorp
   hosts: vault
+  become: true
   roles:
     - role: vault_install
       tags: install

@@ -6,11 +6,21 @@
     state: latest
   become: yes
 
-- name: Instala Google Chrome
-  apt:
-    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+- name: adiciona chave gpg para repositório
+  apt_key:
+    url: "https://dl.google.com/linux/linux_signing_key.pub"
     state: present
-  become: yes
+
+- name: adiciona repositório do google chrome
+  apt_repository:
+    filename: "google-chrome"
+    repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+    state: present
+
+- name: instala chrome
+  apt:
+    name:
+      - google-chrome-stable
 
 - name: Instala VScode
   apt:

@@ -15,5 +15,6 @@ item:
   - pavucontrol
   - htop
   - neofetch
+  - ca-certificates
 
 user: crystian
