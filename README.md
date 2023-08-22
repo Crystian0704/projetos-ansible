@@ -1,1 +1,1 @@
-# example-package
+# Repositório com configurações e playbooks do Ansible 
