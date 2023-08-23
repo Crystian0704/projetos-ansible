@@ -1,0 +1,31 @@
+---
+
+- name: Instalação das dependências
+  apt:
+    name:
+      - make
+      - gcc
+      - libx11-dev
+      - libxft-dev
+      - libxinerama-dev
+      - git
+    state: latest
+    type: package
+
+- name: Clona o repositório do dwm
+  git:
+    repo: https://git.suckless.org/dwm
+    dest: /home/{{ user }}/.config/
+    clone: yes
+
+- name: Copia o diretorio patches
+  copy:
+    src: patches
+    dest: /home/{{ user }}/dwm
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: Aplica patch
+  shell: |
+    cd /home/{{ user }}/.config/dwm
+    patch < /home/{{ user }}/dwm/config/config.patch
