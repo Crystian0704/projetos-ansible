@@ -1,5 +1,4 @@
 ---
-
 - name: Instalação das dependências
   apt:
     name:
@@ -9,26 +8,39 @@
       - libxft-dev
       - libxinerama-dev
       - git
-    state: latest
-    type: package
+    state: present
+  become: yes
 
+- name: Cria pasta .config no diretório do usuário se não existir
+  file:
+    path: /home/{{ user }}/.config
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  
 - name: Clona o repositório do dwm
-  git:
+  ansible.builtin.git:
     repo: https://git.suckless.org/dwm
-    dest: /home/{{ user }}/.config/
+    dest: /home/{{ user }}/.config/dwm
     clone: yes
+
+- name: Remove o arquivo .git 
+  file:
+    path: /home/{{ user }}/.config/dwm/.git
+    state: absent
+
+- name: Altera dono e grupo dos arquivos do dwm
+  file:
+    path: /home/{{ user }}/.config/dwm
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    recurse: yes
 
 - name: Copia o diretorio patches
   copy:
-    src: {{ item }}
-    dest: /home/{{ user }}/dwm
+    src: patches/
+    dest: /home/{{ user }}/.config/dwm
     owner: "{{ user }}"
     group: "{{ user }}"
-    loop:
-      - patches_autostart_dwm-autostart-20161205-bb3bd6f.diff
-      - patches_fullgaps_dwm-fullgaps-20200508-7b77734.diff
 
-- name: Aplica patch
-  shell: |
-    cd /home/{{ user }}/.config/dwm
-    patch < /home/{{ user }}/dwm/config/config.patch

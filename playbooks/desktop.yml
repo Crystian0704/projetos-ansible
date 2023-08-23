@@ -1,4 +1,4 @@
 - name: Executa as roles para configuração do desktop
   hosts: debian
   roles:
-    - desktop_dependencias
+    - dwm
