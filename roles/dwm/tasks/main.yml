@@ -2,6 +2,7 @@
 - name: Instalação das dependências
   apt:
     name:
+      - x11-xserver-utils
       - make
       - gcc
       - libx11-dev
@@ -9,6 +10,7 @@
       - libxinerama-dev
       - git
       - lightdm
+      - unzip
     state: present
   become: yes
 
@@ -19,7 +21,7 @@
     owner: "{{ user }}"
     group: "{{ user }}"
 
-- name: Cria pasta .dwm 
+- name: Cria pasta .dwm
   file:
     path: /home/{{ user }}/.dwm
     state: directory
@@ -66,7 +68,7 @@
     url: https://dwm.suckless.org/patches/fullgaps/dwm-fullgaps-20200508-7b77734.diff
     dest: /home/{{ user }}/.config/dwm
     mode: 0644
-  
+
 - name: Aplica patch
   shell: |
     cd /home/{{ user }}/.config/dwm
@@ -140,3 +142,19 @@
   become: yes
   become_user: root
 
+- name: Baixa fontes nerd
+  get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Ubuntu.zip
+    dest: /tmp
+
+- name: Descompacta fontes nerd
+  shell: |
+    unzip /tmp/Ubuntu.zip -d /usr/share/fonts
+  become: yes
+  become_user: root
+
+- name: Aplica fontes
+  shell: |
+    fc-cache -f -v
+  become: yes
+  become_user: root
