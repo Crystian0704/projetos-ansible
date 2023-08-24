@@ -8,6 +8,7 @@
       - libxft-dev
       - libxinerama-dev
       - git
+      - lightdm
     state: present
   become: yes
 
@@ -17,30 +18,125 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
-  
+
+- name: Cria pasta .dwm 
+  file:
+    path: /home/{{ user }}/.dwm
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: Cria pasta xsessions
+  file:
+    path: /usr/share/xsessions
+    state: directory
+    owner: root
+    group: root
+
+- name: Copia o arquivo autostart.sh e de permissão de execução
+  copy:
+    src: autostart.sh
+    dest: /home/{{ user }}/.dwm
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0755
+
+- name: Copia o arquivo dwm.desktop
+  copy:
+    src: dwm.desktop
+    dest: /usr/share/xsessions
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Clona o repositório do dwm
   ansible.builtin.git:
     repo: https://git.suckless.org/dwm
     dest: /home/{{ user }}/.config/dwm
     clone: yes
 
-- name: Remove o arquivo .git 
-  file:
-    path: /home/{{ user }}/.config/dwm/.git
-    state: absent
+- name: Copia o patch autostart para o diretório do dwm
+  uri:
+    url: https://dwm.suckless.org/patches/autostart/dwm-autostart-20161205-bb3bd6f.diff
+    dest: /home/{{ user }}/.config/dwm
+    mode: 0644
 
-- name: Altera dono e grupo dos arquivos do dwm
+- name: Copia o patch fullgaps para o diretório do dwm
+  uri:
+    url: https://dwm.suckless.org/patches/fullgaps/dwm-fullgaps-20200508-7b77734.diff
+    dest: /home/{{ user }}/.config/dwm
+    mode: 0644
+  
+- name: Aplica patch
+  shell: |
+    cd /home/{{ user }}/.config/dwm
+    patch < dwm-autostart-20161205-bb3bd6f.diff
+    patch < dwm-fullgaps-20200508-7b77734.diff
+  become: yes
+
+- name: Copia o arquivo config.h
+  copy:
+    src: config.h
+    dest: /home/{{ user }}/.config/dwm
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0644
+
+- name: Clona o repositório do st
+  ansible.builtin.git:
+    repo: https://git.suckless.org/st
+    dest: /home/{{ user }}/.config/st
+    clone: yes
+
+- name: Clona o repositório do dwmblocks
+  ansible.builtin.git:
+    repo: https://github.com/torrinfail/dwmblocks
+    dest: /home/{{ user }}/.config/dwmblocks
+    clone: yes
+
+- name: Clona o repositório do dmenu
+  ansible.builtin.git:
+    repo: https://git.suckless.org/dmenu
+    dest: /home/{{ user }}/.config/dmenu
+    clone: yes
+
+- name: Altera dono e grupo dos arquivos .config
   file:
-    path: /home/{{ user }}/.config/dwm
+    path: /home/{{ user }}/.config
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
     recurse: yes
 
-- name: Copia o diretorio patches
-  copy:
-    src: patches/
-    dest: /home/{{ user }}/.config/dwm
-    owner: "{{ user }}"
-    group: "{{ user }}"
+- name: Compila o dwm
+  shell: |
+    cd /home/{{ user }}/.config/dwm
+    make
+    make clean install
+  become: yes
+  become_user: root
+
+- name: Compila o st
+  shell: |
+    cd /home/{{ user }}/.config/st
+    make
+    make clean install
+  become: yes
+  become_user: root
+
+- name: Compila o dwmblocks
+  shell: |
+    cd /home/{{ user }}/.config/dwmblocks
+    make
+    make clean install
+  become: yes
+  become_user: root
+
+- name: Compila o dmenu
+  shell: |
+    cd /home/{{ user }}/.config/dmenu
+    make 
+    make clean install
+  become: yes
+  become_user: root
 

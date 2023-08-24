@@ -6,7 +6,7 @@ groups = ["default"]
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:1240c92a88e92cce99a745048e9e9591cbf9cacad3e007d1229d44ef5390332d"
+content_hash = "sha256:f4a818a44485003da387e0a0c86273f96e571da2e643ac629a74ac9986360966"
 
 [[package]]
 name = "ansible"
