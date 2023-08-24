@@ -144,12 +144,12 @@
 
 - name: Baixa fontes nerd
   get_url:
-    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Ubuntu.zip
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/ProFont.zip
     dest: /tmp
 
 - name: Descompacta fontes nerd
   shell: |
-    unzip /tmp/Ubuntu.zip -d /usr/share/fonts
+    unzip /tmp/Ubuntu.zip -d /usr/share/fonts/
   become: yes
   become_user: root
 
@@ -158,3 +158,4 @@
     fc-cache -f -v
   become: yes
   become_user: root
+
