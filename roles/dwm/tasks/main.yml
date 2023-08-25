@@ -50,6 +50,7 @@
     owner: root
     group: root
     mode: 0644
+  become: yes
 
 - name: Clona o repositório do dwm
   ansible.builtin.git:
@@ -74,11 +75,10 @@
     cd /home/{{ user }}/.config/dwm
     patch < dwm-autostart-20161205-bb3bd6f.diff
     patch < dwm-fullgaps-20200508-7b77734.diff
-  become: yes
 
-- name: Copia o arquivo config.h
+- name: Copia o arquivo config-dwm.h
   copy:
-    src: config.h
+    src: config-dwm.h
     dest: /home/{{ user }}/.config/dwm
     owner: "{{ user }}"
     group: "{{ user }}"
@@ -89,6 +89,14 @@
     repo: https://git.suckless.org/st
     dest: /home/{{ user }}/.config/st
     clone: yes
+
+- name: Copia o arquivo config-st.h
+  copy:
+    src: config-st.h
+    dest: /home/{{ user }}/.config/st
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0644
 
 - name: Clona o repositório do dwmblocks
   ansible.builtin.git:
@@ -147,9 +155,9 @@
     url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/ProFont.zip
     dest: /tmp
 
-- name: Descompacta fontes nerd
+- name: Descompacta fontes Profont
   shell: |
-    unzip /tmp/Ubuntu.zip -d /usr/share/fonts/
+    unzip /tmp/ProFont.zip -d /usr/share/fonts/
   become: yes
   become_user: root
 
