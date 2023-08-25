@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "ProFont IIx Nerd Font Propo:size=11:italic:antialias=true:autohint=true";
+static char *font = {"ProFont IIx Nerd Font Propo:size=11:autohint=true:antialias=true", "Noto Color Emoji:pixelsize=11:autohint=true:antialias=true"};
 static int borderpx = 2;
 
 /*

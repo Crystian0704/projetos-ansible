@@ -86,6 +86,7 @@
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0644
+  tags: config
 
 - name: Aplica patch
   shell: |
@@ -108,6 +109,7 @@
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0644
+  tags: config
 
 - name: Clona o repositório do dwmblocks
   ansible.builtin.git:
@@ -142,6 +144,7 @@
     make clean install
   become: yes
   become_user: root
+  tags: config
 
 - name: Compila o st
   shell: |
@@ -150,6 +153,7 @@
     make clean install
   become: yes
   become_user: root
+  tags: config
 
 - name: Compila o dwmblocks
   shell: |
@@ -158,6 +162,7 @@
     make clean install
   become: yes
   become_user: root
+  tags: config
 
 - name: Compila o dmenu
   shell: |
@@ -166,6 +171,7 @@
     make clean install
   become: yes
   become_user: root
+  tags: config
 
 - name: Compila o slock
   shell: |
@@ -174,11 +180,17 @@
     make clean install
   become: yes
   become_user: root
+  tags: config
 
 - name: Baixa fontes nerd
   get_url:
     url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/ProFont.zip
     dest: /tmp
+
+- name: Baixa NotoEmoji
+  get_url:
+    url: https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf
+    dest: /usr/share/fonts/
 
 - name: Descompacta fontes Profont
   shell: |
