@@ -11,6 +11,9 @@
       - git
       - lightdm
       - unzip
+      - ranger
+      - qutebrowser
+      - libxrandr-dev
     state: present
   become: yes
 
@@ -70,19 +73,27 @@
     dest: /home/{{ user }}/.config/dwm
     mode: 0644
 
+- name: Copia o patch tilewide para o diretório do dwm
+  uri:
+    url: https://dwm.suckless.org/patches/tilewide/dwm-tilewide-6.3.diff
+    dest: /home/{{ user }}/.config/dwm
+    mode: 0644
+
+- name: Copia o arquivo config-dwm.h
+  copy:
+    src: config-dwm.h
+    dest: /home/{{ user }}/.config/dwm/config.h
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0644
+
 - name: Aplica patch
   shell: |
     cd /home/{{ user }}/.config/dwm
     patch < dwm-autostart-20161205-bb3bd6f.diff
     patch < dwm-fullgaps-20200508-7b77734.diff
+    patch < dwm-tilewide-6.3.diff
 
-- name: Copia o arquivo config-dwm.h
-  copy:
-    src: config-dwm.h
-    dest: /home/{{ user }}/.config/dwm
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    mode: 0644
 
 - name: Clona o repositório do st
   ansible.builtin.git:
@@ -93,7 +104,7 @@
 - name: Copia o arquivo config-st.h
   copy:
     src: config-st.h
-    dest: /home/{{ user }}/.config/st
+    dest: /home/{{ user }}/.config/st/config.h
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0644
@@ -108,6 +119,12 @@
   ansible.builtin.git:
     repo: https://git.suckless.org/dmenu
     dest: /home/{{ user }}/.config/dmenu
+    clone: yes
+
+- name: Clona o repositório slock
+  ansible.builtin.git:
+    repo: https://git.suckless.org/slock
+    dest: /home/{{ user }}/.config/slock
     clone: yes
 
 - name: Altera dono e grupo dos arquivos .config
@@ -146,6 +163,14 @@
   shell: |
     cd /home/{{ user }}/.config/dmenu
     make 
+    make clean install
+  become: yes
+  become_user: root
+
+- name: Compila o slock
+  shell: |
+    cd /home/{{ user }}/.config/slock
+    make
     make clean install
   become: yes
   become_user: root
