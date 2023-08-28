@@ -181,15 +181,21 @@
         dest: /home/{{ user }}/.config/dmenu
         mode: 0644
 
+    - name: Copia o patch border para o diretório do dmenu
+      uri:
+        url: https://tools.suckless.org/dmenu/patches/border/dmenu-border-20230512-0fe460d.diff
+        dest: /home/{{ user }}/.config/dmenu
+        mode: 0644
+
     - name: Aplica patch
       shell: |
         cd /home/{{ user }}/.config/dmenu
-
         patch < dmenu-center-5.2.diff
         patch < dmenu-grid-4.9.diff
+        patch < dmenu-border-20230512-0fe460d.diff
         patch < dmenu-gridnav-5.2.diff
         patch < dmenu-dracula-20211128-d78ff08.diff
-        
+
     - name: Compila o dmenu
       shell: |
         cd /home/{{ user }}/.config/dmenu
@@ -214,6 +220,7 @@
         make clean install
       become: yes
       become_user: root
+
   tags: ["config", "slock"]
 
 - name: Altera dono e grupo dos arquivos .config
@@ -223,6 +230,7 @@
     owner: "{{ user }}"
     group: "{{ user }}"
     recurse: yes
+
   tags: ["config"]
 
 - name: Configuração de fontes
