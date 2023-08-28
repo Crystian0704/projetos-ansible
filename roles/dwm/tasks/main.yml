@@ -119,8 +119,42 @@
 - name: Clona o repositório do dmenu
   ansible.builtin.git:
     repo: https://git.suckless.org/dmenu
-    dest: /home/{{ user }}/.config/dmenu
+    dehttps://tools.suckless.org/dmenu/patches/grid/dmenu-grid-4.9.diffst: /home/{{ user }}/.config/dmenu
     clone: yes
+
+- name: Copia o patch center para o diretório do dmenu
+  uri:
+    url: https://tools.suckless.org/dmenu/patches/center/dmenu-center-5.2.diff
+    dest: /home/{{ user }}/.config/dmenu
+    mode: 0644
+
+- name: Copia o patch grid para o diretório do dmenu
+  uri:
+    url: https://tools.suckless.org/dmenu/patches/grid/dmenu-grid-4.9.diff
+    dest: /home/{{ user }}/.config/dmenu
+    mode: 0644
+
+- name: Copia o patch gridnav para o diretório do dmenu
+  uri:
+    url: https://tools.suckless.org/dmenu/patches/gridnav/dmenu-gridnav-5.2.diff
+    dest: /home/{{ user }}/.config/dmenu
+    mode: 0644
+
+- name: Copia o arquivo config-dmenu.h
+  copy:
+    src: config-dmenu.h
+    dest: /home/{{ user }}/.config/dmenu/config.h
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0644
+  tags: ['config','dmenu']
+
+- name: Aplica patch
+  shell: |
+    cd /home/{{ user }}/.config/dmenu
+    patch < dmenu-center-5.2.diff
+    patch < dmenu-grid-4.9.diff
+    patch < dmenu-gridnav-5.2.diff
 
 - name: Clona o repositório slock
   ansible.builtin.git:
@@ -193,6 +227,7 @@
     owner: root
     group: root
     mode: 0755
+  
 
 - name: Baixa NotoEmoji
   get_url:
