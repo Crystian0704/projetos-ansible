@@ -187,12 +187,37 @@
         dest: /home/{{ user }}/.config/dmenu
         mode: 0644
 
+    - name: Copia o patch separator para o diretório do dmenu
+      uri:
+        url: https://tools.suckless.org/dmenu/patches/separator/dmenu-separator-5.2.patch
+        dest: /home/{{ user }}/.config/dmenu
+        mode: 0644
+
+    - name: Copia o patch emoji-highlight para o diretório do dmenu
+      uri:
+        url: https://tools.suckless.org/dmenu/patches/emoji-highlight/dmenu-emoji-highlight-5.0.diff
+        dest: /home/{{ user }}/.config/dmenu
+        mode: 0644
+
+    - name: Copia o patch fuzzymatch para o diretório do dmenu
+      uri:
+        url: https://tools.suckless.org/dmenu/patches/fuzzymatch/dmenu-fuzzymatch-4.9.diff
+        dest: /home/{{ user }}/.config/dmenu
+        mode: 0644
+
     - name: Aplica patch
       shell: |
         cd /home/{{ user }}/.config/dmenu
+
+        patch < dmenu-separator-5.2.patch
+
         patch < dmenu-center-5.2.diff
+        #patch < dmenu-fuzzymatch-4.9.diff
+
         patch < dmenu-grid-4.9.diff
+
         patch < dmenu-border-20230512-0fe460d.diff
+        #patch < dmenu-emoji-highlight-5.0.diff
         patch < dmenu-gridnav-5.2.diff
         patch < dmenu-dracula-20211128-d78ff08.diff
 
