@@ -14,6 +14,7 @@
       - ranger
       - qutebrowser
       - libxrandr-dev
+
     state: present
   become: yes
 
@@ -62,6 +63,7 @@
         repo: https://git.suckless.org/dwm
         dest: /home/{{ user }}/.config/dwm
         clone: yes
+        force: yes
 
     - name: Copia o patch autostart para o diretório do dwm
       uri:
@@ -72,12 +74,6 @@
     - name: Copia o patch tilewide para o diretório do dwm
       uri:
         url: https://dwm.suckless.org/patches/tilewide/dwm-tilewide-6.3.diff
-        dest: /home/{{ user }}/.config/dwm
-        mode: 0644
-
-    - name: Copia o patch functionalgaps para o diretório do dwm
-      uri:
-        url: https://dwm.suckless.org/patches/functionalgaps/dwm-functionalgaps+pertag-6.2.diff
         dest: /home/{{ user }}/.config/dwm
         mode: 0644
 
@@ -93,9 +89,7 @@
       shell: |
         cd /home/{{ user }}/.config/dwm
         patch < dwm-autostart-20161205-bb3bd6f.diff
-        patch < dwm-functionalgaps+pertag-6.2.diff
         patch < dwm-tilewide-6.3.diff
-        
 
     - name: Compila o dwm
       shell: |
@@ -114,6 +108,7 @@
         repo: https://git.suckless.org/st
         dest: /home/{{ user }}/.config/st
         clone: yes
+        force: yes
 
     - name: Copia o arquivo config-st.h
       copy:
@@ -140,6 +135,7 @@
         repo: https://github.com/torrinfail/dwmblocks
         dest: /home/{{ user }}/.config/dwmblocks
         clone: yes
+        force: yes
 
     - name: Compila o dwmblocks
       shell: |
@@ -158,6 +154,7 @@
         repo: https://git.suckless.org/dmenu
         dest: /home/{{ user }}/.config/dmenu
         clone: yes
+        force: yes       
 
     - name: Copia o patch center para o diretório do dmenu
       uri:
@@ -189,29 +186,30 @@
         dest: /home/{{ user }}/.config/dmenu
         mode: 0644
 
-    - name: Copia o patch separator para o diretório do dmenu
+    - name: Copia o patch tmenu para o diretório do dmenu
       uri:
-        url: https://tools.suckless.org/dmenu/patches/separator/dmenu-separator-5.2.patch
+        url: https://tools.suckless.org/dmenu/patches/tsv/dmenu-tsv-20220305-e73651f.diff
         dest: /home/{{ user }}/.config/dmenu
         mode: 0644
 
-    - name: Copia o arquivo config-dmenu.h
-      copy:
-        src: config-dmenu.h
-        dest: /home/{{ user }}/.config/dmenu/config.h
-        owner: "{{ user }}"
-        group: "{{ user }}"
-        mode: 0644
+    # - name: Copia o arquivo config-dmenu.h
+    #   copy:
+    #     src: config-dmenu.h
+    #     dest: /home/{{ user }}/.config/dmenu/config.h
+    #     owner: "{{ user }}"
+    #     group: "{{ user }}"
+    #     mode: 0644
 
     - name: Aplica patch
       shell: |
         cd /home/{{ user }}/.config/dmenu
-        patch < dmenu-separator-5.2.patch
         patch < dmenu-center-5.2.diff
         patch < dmenu-grid-4.9.diff
+        patch < dmenu-tsv-20220305-e73651f.diff
         patch < dmenu-border-20230512-0fe460d.diff
         patch < dmenu-gridnav-5.2.diff
         patch < dmenu-dracula-20211128-d78ff08.diff
+        
 
     - name: Compila o dmenu
       shell: |
@@ -230,6 +228,8 @@
         repo: https://git.suckless.org/slock
         dest: /home/{{ user }}/.config/slock
         clone: yes
+        force: yes
+
     - name: Compila o slock
       shell: |
         cd /home/{{ user }}/.config/slock
