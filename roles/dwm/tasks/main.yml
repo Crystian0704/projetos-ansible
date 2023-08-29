@@ -69,21 +69,21 @@
         dest: /home/{{ user }}/.config/dwm
         mode: 0644
 
-    - name: Copia o patch fullgaps para o diretório do dwm
-      uri:
-        url: https://dwm.suckless.org/patches/fullgaps/dwm-fullgaps-20200508-7b77734.diff
-        dest: /home/{{ user }}/.config/dwm
-        mode: 0644
-
     - name: Copia o patch tilewide para o diretório do dwm
       uri:
         url: https://dwm.suckless.org/patches/tilewide/dwm-tilewide-6.3.diff
         dest: /home/{{ user }}/.config/dwm
         mode: 0644
 
+    - name: Copia o patch functionalgaps para o diretório do dwm
+      uri:
+        url: https://dwm.suckless.org/patches/functionalgaps/dwm-functionalgaps+pertag-6.2.diff
+        dest: /home/{{ user }}/.config/dwm
+        mode: 0644
+
     - name: Copia o arquivo config-dwm.h
       copy:
-        src: config-dwm.h
+        src: config-dwm2.h
         dest: /home/{{ user }}/.config/dwm/config.h
         owner: "{{ user }}"
         group: "{{ user }}"
@@ -93,8 +93,9 @@
       shell: |
         cd /home/{{ user }}/.config/dwm
         patch < dwm-autostart-20161205-bb3bd6f.diff
-        patch < dwm-fullgaps-20200508-7b77734.diff
+        patch < dwm-functionalgaps+pertag-6.2.diff
         patch < dwm-tilewide-6.3.diff
+        
 
     - name: Compila o dwm
       shell: |
@@ -121,6 +122,7 @@
         owner: "{{ user }}"
         group: "{{ user }}"
         mode: 0644
+
     - name: Compila o st
       shell: |
         cd /home/{{ user }}/.config/st
@@ -191,6 +193,14 @@
       uri:
         url: https://tools.suckless.org/dmenu/patches/separator/dmenu-separator-5.2.patch
         dest: /home/{{ user }}/.config/dmenu
+        mode: 0644
+
+    - name: Copia o arquivo config-dmenu.h
+      copy:
+        src: config-dmenu.h
+        dest: /home/{{ user }}/.config/dmenu/config.h
+        owner: "{{ user }}"
+        group: "{{ user }}"
         mode: 0644
 
     - name: Aplica patch
