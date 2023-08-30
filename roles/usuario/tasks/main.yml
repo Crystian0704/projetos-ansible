@@ -7,14 +7,6 @@
     password: "$6$vZoglp5i8xTPGdlI$3YVu35FUGUaXw5D8vQv7Y.NKrqK1sO.lJPih5UTKr4OSzdtrUkhjn1HBCiKr9PDG.sO4YnP9OGK/aAS9Svar51"
     shell: /bin/bash
 
-- name: Reinicia o lightdm
-  service:
-    name: lightdm
-    state: restarted
-    enabled: yes
-  become: yes
-  become_user: root
-
 - name: Instala as dependências
   apt:
     name:
@@ -34,3 +26,12 @@
     state: present
   become: yes
   become_user: "{{ usuario }}"
+
+- name: Reinicia o lightdm
+  service:
+    name: lightdm
+    state: restarted
+    enabled: yes
+  become: yes
+  become_user: root
+
