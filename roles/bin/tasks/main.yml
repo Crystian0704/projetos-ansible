@@ -1,0 +1,7 @@
+- name: Cria pasta .bin no diretório do usuário se não existir
+  file:
+    path: /home/{{ user }}/.bin
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0755
