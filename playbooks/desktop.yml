@@ -1,4 +1,9 @@
 - name: Executa as roles para configuração do desktop
   hosts: debian
+  vars:
+    user: crystian
   roles:
-    - dwm
+    - bin
+    - dmenu
+
+

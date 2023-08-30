@@ -1,7 +1,31 @@
-- name: Cria pasta .bin no diretório do usuário se não existir
+- name: Cria diretório bin no diretório do usuário se não existir
   file:
-    path: /home/{{ user }}/.bin
+    path: /home/{{ user }}/bin
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0755
+
+- name: Cria diretório de manual
+  file:
+    path: /home/{{ user }}/man
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0755
+
+- name: Adicione o diretório bin ao PATH 
+  lineinfile:
+    path: /home/{{ user }}/.bashrc
+    line: 'export PATH="$PATH:/home/{{ user }}/bin"'
+    state: present
+    create: yes
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: Adione o diretório man ao MANPATH
+  lineinfile:
+    path: "/home/{{ user }}/.bashrc"
+    line: 'export MANPATH="$MANPATH:/home/{{ user }}/man"'
+    state: present
+  

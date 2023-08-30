@@ -11,14 +11,14 @@
 
 - name: Cria pasta .config no diretório do usuário se não existir
   file:
-    path: /home/{{ user }}/.config
+    path: "/home/{{ user }}/.config"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
 
 - name: Cria a pasta dmenu em .config
   file:
-    path: /home/{{ user }}/.config/dmenu
+    path: "/home/{{ user }}/.config/dmenu"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
@@ -26,46 +26,45 @@
 - name: Faz o clone do repositório do dmenu
   git:
     repo: https://git.suckless.org/dmenu
-    dest: /home/{{ user }}/.config/dmenu/
-    owner: "{{ user }}"
-    group: "{{ user }}"
+    dest: "/home/{{ user }}/.config/dmenu/"
     clone: yes
+    force: yes
 
 - name: Baixa os patches
   uri:
-    url: { { item.src } }
-    dest: /home/{{ user }}/.config/dmenu/{{ item.filename }}
+    url: "{{ item.src }}"
+    dest: "/home/{{ user }}/.config/dmenu/{{ item.filename }}"
     owner: "{{ user }}"
     group: "{{ user }}"
   loop:
     - {
-        src: https://tools.suckless.org/dmenu/patches/center/dmenu-center-5.2.diff,
-        filename: dmenu-center-5.2.diff,
+        src: "https://tools.suckless.org/dmenu/patches/center/dmenu-center-5.2.diff",
+        filename: "dmenu-center-5.2.diff"
       }
     - {
-        src: https://tools.suckless.org/dmenu/patches/grid/dmenu-grid-4.9.diff,
-        filename: dmenu-grid-4.9.diff,
+        src: "https://tools.suckless.org/dmenu/patches/grid/dmenu-grid-4.9.diff",
+        filename: "dmenu-grid-4.9.diff"
       }
     - {
-        src: https://tools.suckless.org/dmenu/patches/gridnav/dmenu-gridnav-5.2.diff,
-        filename: dmenu-gridnav-5.2.diff,
+        src: "https://tools.suckless.org/dmenu/patches/gridnav/dmenu-gridnav-5.2.diff",
+        filename: "dmenu-gridnav-5.2.diff"
       }
     - {
-        src: https://tools.suckless.org/dmenu/patches/dracula/dmenu-dracula-20211128-d78ff08.diff,
-        filename: dmenu-dracula-20211128-d78ff08.diff,
+        src: "https://tools.suckless.org/dmenu/patches/dracula/dmenu-dracula-20211128-d78ff08.diff",
+        filename: "dmenu-dracula-20211128-d78ff08.diff"
       }
     - {
-        src: https://tools.suckless.org/dmenu/patches/border/dmenu-border-20230512-0fe460d.diff,
-        filename: dmenu-border-20230512-0fe460d.diff,
+        src: "https://tools.suckless.org/dmenu/patches/border/dmenu-border-20230512-0fe460d.diff",
+        filename: "dmenu-border-20230512-0fe460d.diff"
       }
     - {
-        src: https://tools.suckless.org/dmenu/patches/tsv/dmenu-tsv-20220305-e73651f.diff,
-        filename: dmenu-tsv-20220305-e73651f.diff,
+        src: "https://tools.suckless.org/dmenu/patches/tsv/dmenu-tsv-20220305-e73651f.diff",
+        filename: "dmenu-tsv-20220305-e73651f.diff"
       }
 
 - name: Aplica os patches
   shell: |
-    cd /home/{{ user }}/.config/dmenu
+    cd "/home/{{ user }}/.config/dmenu"
     patch < dmenu-center-5.2.diff
     patch < dmenu-grid-4.9.diff
     patch < dmenu-tsv-20220305-e73651f.diff
@@ -73,15 +72,16 @@
     patch < dmenu-gridnav-5.2.diff
     patch < dmenu-dracula-20211128-d78ff08.diff
 
-- name: Copia os arquivos de configuração para a pasta dmenu
-  copy:
-    src: files/
-    dest: /home/{{ user }}/.config/dmenu/
+- name: Copia o template do config.mk
+  template: 
+    src: config.mk.j2
+    dest: "/home/{{ user }}/.config/dmenu/config.mk"
     owner: "{{ user }}"
     group: "{{ user }}"
-    mode: 0644
 
 - name: Compila o dmenu
   shell: |
-    cd /home/{{ user }}/.config/dmenu
+    cd "/home/{{ user }}/.config/dmenu"
+    make
     make clean install
+  become_user: "{{ user }}"
