@@ -1,0 +1,15 @@
+- name: Clona o repositório do dwmblocks
+  git:
+    repo: https://github.com/torrinfail/dwmblocks
+    dest: /home/{{ usuario }}/.config/suckless/dwmblocks
+    clone: yes
+    force: yes
+  become: yes
+  become_user: "{{ usuario }}"
+
+- name: Compila o dwmblocks
+  shell: |
+    cd /home/{{ usuario }}/.config/suckless/dwmblocks
+    make
+    make clean install
+

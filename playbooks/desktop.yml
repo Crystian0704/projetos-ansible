@@ -1,9 +1,25 @@
 - name: Executa as roles para configuração do desktop
   hosts: debian
   vars:
-    user: crystian
+    usuario: outro
+
   roles:
-    - bin
-    - dmenu
+    - role: usuario
+      tags: ['usuario']
+    - role: dwm
+      tags: ['dwm']
+    - role: st
+      tags: ['st']
+    - role: dmenu
+      tags: ['dmenu']
+    - role: slock
+      tags: ['slock']
+    - role: dwmblocks
+      tags: ['dwmblocks']
+    - role: fontes
+      tags: ['fontes']
+   
+
+
 
 

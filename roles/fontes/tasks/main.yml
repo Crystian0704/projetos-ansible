@@ -1,0 +1,20 @@
+- name: Baixa fontes nerd
+  get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/ProFont.zip
+    dest: /tmp
+
+- name: Baixa NotoEmoji
+  get_url:
+    url: https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf
+    dest: /usr/share/fonts/emoji
+
+- name: Descompacta fontes Profont
+  shell: |
+    rm -rf /usr/share/fonts/profont
+    mkdir /usr/share/fonts/profont
+    unzip /tmp/ProFont.zip -d /usr/share/fonts/profont
+
+- name: Aplica fontes
+  shell: |
+    fc-cache -f -v
+

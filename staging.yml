@@ -13,7 +13,7 @@ all:
       ansible_user: vagrant
       ansible_ssh_private_key_file: ~/vms/vault/.vagrant/machines/vault3/libvirt/private_key
     debian:
-      ansible_host: 192.168.122.66
+      ansible_host: 192.168.122.24
       ansible_user: root
 
   children:

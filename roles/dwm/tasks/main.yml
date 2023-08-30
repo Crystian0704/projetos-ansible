@@ -1,50 +1,9 @@
----
-- name: Instalação das dependências
-  apt:
-    name:
-      - x11-xserver-utils
-      - make
-      - gcc
-      - libx11-dev
-      - libxft-dev
-      - libxinerama-dev
-      - git
-      - lightdm
-      - unzip
-      - ranger
-      - qutebrowser
-      - libxrandr-dev
-
-    state: present
-  become: yes
-
-- name: Cria pasta .config no diretório do usuário se não existir
-  file:
-    path: /home/{{ user }}/.config
-    state: directory
-    owner: "{{ user }}"
-    group: "{{ user }}"
-
-- name: Cria pasta .dwm
-  file:
-    path: /home/{{ user }}/.dwm
-    state: directory
-    owner: "{{ user }}"
-    group: "{{ user }}"
-
-- name: Cria pasta xsessions
-  file:
-    path: /usr/share/xsessions
-    state: directory
-    owner: root
-    group: root
-
 - name: Copia o arquivo autostart.sh e da permissão de execução
   copy:
     src: autostart.sh
-    dest: /home/{{ user }}/.dwm
-    owner: "{{ user }}"
-    group: "{{ user }}"
+    dest: /home/{{ usuario }}/.dwm
+    owner: "{{ usuario }}"
+    group: "{{ usuario }}"
     mode: 0755
 
 - name: Copia o arquivo dwm.desktop
@@ -54,234 +13,49 @@
     owner: root
     group: root
     mode: 0644
+
+- name: Clona o repositório do dwm
+  git:
+    repo: https://git.suckless.org/dwm
+    dest: /home/{{ usuario }}/.config/suckless/dwm
+    clone: yes
+    force: yes
   become: yes
+  become_user: "{{ usuario }}"
 
-- name: Configuração dwm
-  block:
-    - name: Clona o repositório do dwm
-      ansible.builtin.git:
-        repo: https://git.suckless.org/dwm
-        dest: /home/{{ user }}/.config/dwm
-        clone: yes
-        force: yes
+- name: Baixa os patches
+  uri:
+    url: "{{ item.src }}"
+    dest: "/home/{{ usuario }}/.config/suckless/dwm/{{ item.filename }}"
+    owner: "{{ usuario }}"
+    group: "{{ usuario }}"
+  loop:
+    - {
+        src: "https://dwm.suckless.org/patches/autostart/dwm-autostart-20161205-bb3bd6f.diff",
+        filename: "dwm-autostart-20161205-bb3bd6f.diff"
+      }
+    - {
+        src: "https://dwm.suckless.org/patches/tilewide/dwm-tilewide-6.3.diff",
+        filename: "dwm-tilewide-6.3.diff"
+      }
 
-    - name: Copia o patch autostart para o diretório do dwm
-      uri:
-        url: https://dwm.suckless.org/patches/autostart/dwm-autostart-20161205-bb3bd6f.diff
-        dest: /home/{{ user }}/.config/dwm
-        mode: 0644
+- name: Aplica os patches
+  shell: |
+    cd "/home/{{ usuario }}/.config/suckless/dwm"
+    patch < dwm-autostart-20161205-bb3bd6f.diff
+    patch < dwm-tilewide-6.3.diff
 
-    - name: Copia o patch tilewide para o diretório do dwm
-      uri:
-        url: https://dwm.suckless.org/patches/tilewide/dwm-tilewide-6.3.diff
-        dest: /home/{{ user }}/.config/dwm
-        mode: 0644
+- name: Copia o arquivo de configuração
+  copy:
+    src: config.def.h
+    dest: /home/{{ usuario }}/.config/suckless/dwm
+    owner: "{{ usuario }}"
+    group: "{{ usuario }}"
 
-    - name: Copia o arquivo config-dwm.h
-      copy:
-        src: config-dwm2.h
-        dest: /home/{{ user }}/.config/dwm/config.h
-        owner: "{{ user }}"
-        group: "{{ user }}"
-        mode: 0644
+- name: Compila o dwm
+  shell: |
+    cd "/home/{{ usuario }}/.config/suckless/dwm"
+    make
+    make clean install
 
-    - name: Aplica patch
-      shell: |
-        cd /home/{{ user }}/.config/dwm
-        patch < dwm-autostart-20161205-bb3bd6f.diff
-        patch < dwm-tilewide-6.3.diff
 
-    - name: Compila o dwm
-      shell: |
-        cd /home/{{ user }}/.config/dwm
-        make
-        make clean install
-      become: yes
-      become_user: root
-
-  tags: ["config", "dwm"]
-
-- name: Configuração st
-  block:
-    - name: Clona o repositório do st
-      ansible.builtin.git:
-        repo: https://git.suckless.org/st
-        dest: /home/{{ user }}/.config/st
-        clone: yes
-        force: yes
-
-    - name: Copia o arquivo config-st.h
-      copy:
-        src: config-st.h
-        dest: /home/{{ user }}/.config/st/config.h
-        owner: "{{ user }}"
-        group: "{{ user }}"
-        mode: 0644
-
-    - name: Compila o st
-      shell: |
-        cd /home/{{ user }}/.config/st
-        make
-        make clean install
-      become: yes
-      become_user: root
-
-  tags: ["config", "st"]
-
-- name: Configuração dwmblocks
-  block:
-    - name: Clona o repositório do dwmblocks
-      ansible.builtin.git:
-        repo: https://github.com/torrinfail/dwmblocks
-        dest: /home/{{ user }}/.config/dwmblocks
-        clone: yes
-        force: yes
-
-    - name: Compila o dwmblocks
-      shell: |
-        cd /home/{{ user }}/.config/dwmblocks
-        make
-        make clean install
-      become: yes
-      become_user: root
-
-  tags: ["config", "dwmblocks"]
-
-- name: Configuração dmenu
-  block:
-    - name: Clona o repositório do dmenu
-      ansible.builtin.git:
-        repo: https://git.suckless.org/dmenu
-        dest: /home/{{ user }}/.config/dmenu
-        clone: yes
-        force: yes       
-
-    - name: Copia o patch center para o diretório do dmenu
-      uri:
-        url: https://tools.suckless.org/dmenu/patches/center/dmenu-center-5.2.diff
-        dest: /home/{{ user }}/.config/dmenu
-        mode: 0644
-
-    - name: Copia o patch grid para o diretório do dmenu
-      uri:
-        url: https://tools.suckless.org/dmenu/patches/grid/dmenu-grid-4.9.diff
-        dest: /home/{{ user }}/.config/dmenu
-        mode: 0644
-
-    - name: Copia o patch gridnav para o diretório do dmenu
-      uri:
-        url: https://tools.suckless.org/dmenu/patches/gridnav/dmenu-gridnav-5.2.diff
-        dest: /home/{{ user }}/.config/dmenu
-        mode: 0644
-
-    - name: Copia o patch dracula para o diretório do dmenu
-      uri:
-        url: https://tools.suckless.org/dmenu/patches/dracula/dmenu-dracula-20211128-d78ff08.diff
-        dest: /home/{{ user }}/.config/dmenu
-        mode: 0644
-
-    - name: Copia o patch border para o diretório do dmenu
-      uri:
-        url: https://tools.suckless.org/dmenu/patches/border/dmenu-border-20230512-0fe460d.diff
-        dest: /home/{{ user }}/.config/dmenu
-        mode: 0644
-
-    - name: Copia o patch tmenu para o diretório do dmenu
-      uri:
-        url: https://tools.suckless.org/dmenu/patches/tsv/dmenu-tsv-20220305-e73651f.diff
-        dest: /home/{{ user }}/.config/dmenu
-        mode: 0644
-
-    # - name: Copia o arquivo config-dmenu.h
-    #   copy:
-    #     src: config-dmenu.h
-    #     dest: /home/{{ user }}/.config/dmenu/config.h
-    #     owner: "{{ user }}"
-    #     group: "{{ user }}"
-    #     mode: 0644
-
-    - name: Aplica patch
-      shell: |
-        cd /home/{{ user }}/.config/dmenu
-        patch < dmenu-center-5.2.diff
-        patch < dmenu-grid-4.9.diff
-        patch < dmenu-tsv-20220305-e73651f.diff
-        patch < dmenu-border-20230512-0fe460d.diff
-        patch < dmenu-gridnav-5.2.diff
-        patch < dmenu-dracula-20211128-d78ff08.diff
-        
-
-    - name: Compila o dmenu
-      shell: |
-        cd /home/{{ user }}/.config/dmenu
-        make
-        make clean install
-      become: yes
-      become_user: root
-
-  tags: ["config", "dmenu"]
-
-- name: Configuração slock
-  block:
-    - name: Clona o repositório slock
-      ansible.builtin.git:
-        repo: https://git.suckless.org/slock
-        dest: /home/{{ user }}/.config/slock
-        clone: yes
-        force: yes
-
-    - name: Compila o slock
-      shell: |
-        cd /home/{{ user }}/.config/slock
-        make
-        make clean install
-      become: yes
-      become_user: root
-
-  tags: ["config", "slock"]
-
-- name: Altera dono e grupo dos arquivos .config
-  file:
-    path: /home/{{ user }}/.config
-    state: directory
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    recurse: yes
-
-  tags: ["config"]
-
-- name: Configuração de fontes
-  block:
-    - name: Baixa fontes nerd
-      get_url:
-        url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/ProFont.zip
-        dest: /tmp
-
-    - name: Cria diretório de fontes emoji
-      file:
-        path: /usr/share/fonts/emoji
-        state: directory
-        owner: root
-        group: root
-        mode: 0755
-
-    - name: Baixa NotoEmoji
-      get_url:
-        url: https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf
-        dest: /usr/share/fonts/emoji
-
-    - name: Descompacta fontes Profont
-      shell: |
-        rm -rf /usr/share/fonts/profont
-        mkdir /usr/share/fonts/profont
-        unzip /tmp/ProFont.zip -d /usr/share/fonts/profont
-      become: yes
-      become_user: root
-
-    - name: Aplica fontes
-      shell: |
-        fc-cache -f -v
-      become: yes
-      become_user: root
-
-  tags: ["fonts"]

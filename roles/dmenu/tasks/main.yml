@@ -1,41 +1,18 @@
-- name: Instala as dependências
-  apt:
-    name:
-      - make
-      - gcc
-      - libx11-dev
-      - libxft-dev
-      - libxinerama-dev
-    state: present
-  become: yes
-
-- name: Cria pasta .config no diretório do usuário se não existir
-  file:
-    path: "/home/{{ user }}/.config"
-    state: directory
-    owner: "{{ user }}"
-    group: "{{ user }}"
-
-- name: Cria a pasta dmenu em .config
-  file:
-    path: "/home/{{ user }}/.config/dmenu"
-    state: directory
-    owner: "{{ user }}"
-    group: "{{ user }}"
-
 - name: Faz o clone do repositório do dmenu
   git:
     repo: https://git.suckless.org/dmenu
-    dest: "/home/{{ user }}/.config/dmenu/"
+    dest: "/home/{{ usuario }}/.config/suckless/dmenu/"
     clone: yes
     force: yes
+  become: yes
+  become_user: "{{ usuario }}"
 
 - name: Baixa os patches
   uri:
     url: "{{ item.src }}"
-    dest: "/home/{{ user }}/.config/dmenu/{{ item.filename }}"
-    owner: "{{ user }}"
-    group: "{{ user }}"
+    dest: "/home/{{ usuario }}/.config/suckless/dmenu/{{ item.filename }}"
+    owner: "{{ usuario }}"
+    group: "{{ usuario }}"
   loop:
     - {
         src: "https://tools.suckless.org/dmenu/patches/center/dmenu-center-5.2.diff",
@@ -57,31 +34,19 @@
         src: "https://tools.suckless.org/dmenu/patches/border/dmenu-border-20230512-0fe460d.diff",
         filename: "dmenu-border-20230512-0fe460d.diff"
       }
-    - {
-        src: "https://tools.suckless.org/dmenu/patches/tsv/dmenu-tsv-20220305-e73651f.diff",
-        filename: "dmenu-tsv-20220305-e73651f.diff"
-      }
 
 - name: Aplica os patches
   shell: |
-    cd "/home/{{ user }}/.config/dmenu"
+    cd "/home/{{ usuario }}/.config/suckless/dmenu"
     patch < dmenu-center-5.2.diff
     patch < dmenu-grid-4.9.diff
-    patch < dmenu-tsv-20220305-e73651f.diff
     patch < dmenu-border-20230512-0fe460d.diff
     patch < dmenu-gridnav-5.2.diff
     patch < dmenu-dracula-20211128-d78ff08.diff
 
-- name: Copia o template do config.mk
-  template: 
-    src: config.mk.j2
-    dest: "/home/{{ user }}/.config/dmenu/config.mk"
-    owner: "{{ user }}"
-    group: "{{ user }}"
-
 - name: Compila o dmenu
   shell: |
-    cd "/home/{{ user }}/.config/dmenu"
+    cd "/home/{{ usuario }}/.config/suckless/dmenu"
     make
     make clean install
-  become_user: "{{ user }}"
+

@@ -1,0 +1,36 @@
+- name: Configura o sudo
+  user:
+    name: "{{ usuario }}"
+    groups: sudo
+    append: yes
+    createhome: yes
+    password: "$6$vZoglp5i8xTPGdlI$3YVu35FUGUaXw5D8vQv7Y.NKrqK1sO.lJPih5UTKr4OSzdtrUkhjn1HBCiKr9PDG.sO4YnP9OGK/aAS9Svar51"
+    shell: /bin/bash
+
+- name: Reinicia o lightdm
+  service:
+    name: lightdm
+    state: restarted
+    enabled: yes
+  become: yes
+  become_user: root
+
+- name: Instala as dependências
+  apt:
+    name:
+    - x11-xserver-utils
+    - make
+    - gcc
+    - libx11-dev
+    - libxft-dev
+    - libxinerama-dev
+    - git
+    - lightdm
+    - unzip
+    - ranger
+    - qutebrowser
+    - libxrandr-dev
+    - sudo
+    state: present
+  become: yes
+  become_user: "{{ usuario }}"

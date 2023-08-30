@@ -1,0 +1,14 @@
+- name: Clona o repositório slock
+  git:
+    repo: https://git.suckless.org/slock
+    dest: /home/{{ usuario }}/.config/suckless/slock
+    clone: yes
+    force: yes
+  become: yes
+  become_user: "{{ usuario }}"
+
+- name: Compila o slock
+  shell: |
+    cd /home/{{ usuario }}/.config/suckless/slock
+    make
+    make install
