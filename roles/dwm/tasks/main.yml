@@ -1,7 +1,7 @@
 - name: Copia o arquivo autostart.sh e da permissão de execução
   copy:
     src: autostart.sh
-    dest: /home/{{ usuario }}/.dwm
+    dest: /home/{{ usuario }}/.dwm/
     owner: "{{ usuario }}"
     group: "{{ usuario }}"
     mode: 0755

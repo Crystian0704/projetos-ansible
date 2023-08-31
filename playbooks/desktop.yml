@@ -1,7 +1,7 @@
 - name: Executa as roles para configuração do desktop
   hosts: debian
   vars:
-    usuario: oioi
+    usuario: deb-vm
   roles:
     - role: usuario
       tags: ['usuario']

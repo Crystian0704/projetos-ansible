@@ -25,7 +25,7 @@
     - sudo
     state: present
   become: yes
-  become_user: "{{ usuario }}"
+  become_user: root
 
 - name: Reinicia o lightdm
   service:
