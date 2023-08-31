@@ -6,6 +6,16 @@
     createhome: yes
     password: "$6$vZoglp5i8xTPGdlI$3YVu35FUGUaXw5D8vQv7Y.NKrqK1sO.lJPih5UTKr4OSzdtrUkhjn1HBCiKr9PDG.sO4YnP9OGK/aAS9Svar51"
     shell: /bin/bash
+  notify: Reinicia o lightdm
+
+  handlers:
+  - name: Reinicia o lightdm
+    service:
+      name: lightdm
+      state: restarted
+      enabled: yes
+    become: yes
+    become_user: root
 
 - name: Instala as dependências
   apt:
@@ -16,7 +26,6 @@
     - libx11-dev
     - libxft-dev
     - libxinerama-dev
-    - git
     - lightdm
     - unzip
     - ranger
@@ -27,11 +36,5 @@
   become: yes
   become_user: root
 
-- name: Reinicia o lightdm
-  service:
-    name: lightdm
-    state: restarted
-    enabled: yes
-  become: yes
-  become_user: root
+
 

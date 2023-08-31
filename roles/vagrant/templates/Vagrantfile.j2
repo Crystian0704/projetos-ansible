@@ -1,0 +1,20 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  (1..{{ vm_provision_numbers }}).each do |i|
+    config.vm.define "{{ vm_provision_name }}""#{i}" do |node|
+      node.vm.box = "{{ vm_provision_box }}"
+      node.vm.network "private_network", ip: "{{ vm_provision_cidr_ip }}.#{1 + i}"
+      node.vm.provider "libvirt" do |vb|
+      node.vm.hostname = "{{ vm_provision_name }}""#{i}"
+        vb.memory = {{ vm_provision_memory }}  
+        vb.cpus = {{ vm_provision_cpus }}      
+      end
+      node.vm.provision "shell", inline: <<-SHELL
+        mkdir -p /home/vagrant/.ssh
+        echo "{{ vm_provision_ssh_key }}" >> /home/vagrant/.ssh/authorized_keys
+      SHELL
+    end
+  end
+end

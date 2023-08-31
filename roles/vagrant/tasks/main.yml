@@ -1,0 +1,73 @@
+- name: Instalação Vagrant com libvirt
+  block:
+  - name: Atualiza o repositório
+    apt: update_cache=no
+    become: yes
+
+  - name: Remove vagrant-libvirt
+    apt:
+      name: vagrant-libvirt
+      state: absent
+
+  - name: Instala dependências
+    apt:
+      name:
+        - qemu
+        - libvirt-daemon-system
+        - ebtables
+        - libguestfs-tools
+        - vagrant
+        - ruby-fog-libvirt
+        - nfs-kernel-server
+      state: present
+
+  - name: Habilita o serviço libvirtd
+    service:
+      name: libvirtd
+      state: started
+      enabled: yes
+
+  - name: Instala o plugin vagrant-libvirt
+    shell: vagrant plugin install vagrant-libvirt
+
+  tags: ['vagrant:install']
+
+- name: Criação de VMs
+  block:
+  - name: Define o caminho para salvar as configurações da VM
+    set_fact:
+    vm_provision_path: "{{ lookup('env', 'HOME') }}/vms/{{ vm_provision_name }}"
+
+  - name: Cria o diretório para salvar as configurações da VM
+    file:
+      path: "{{ vm_provision_path }}"
+      state: directory
+      
+  - name: Destroi VMs existentes
+    command: vagrant destroy -f
+    args:
+      chdir: "{{ vm_provision_path }}"
+    become: yes
+    ignore_errors: yes
+
+  - name: Remove .vagrant
+    file:
+      path: "{{ vm_provision_path }}/.vagrant"
+      state: absent
+    become: yes
+
+  - name: Copia chave como uma variável
+    set_fact:
+      vm_provision_ssh_key: "{{ lookup('file', vm_provision_ssh_key_path) }}"
+
+  - name: Cria o arquivo Vagrantfile
+    template:
+      src: Vagrantfile.j2
+      dest: "{{ vm_provision_path }}/Vagrantfile"
+
+  - name: Provisiona VM
+    command: vagrant up
+    args:
+      chdir: "{{ vm_provision_path }}"
+  
+  tags: ['vagrant:provision']
