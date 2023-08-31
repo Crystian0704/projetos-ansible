@@ -3,7 +3,5 @@
   hosts: localhost
   connection: local
   roles:
-    - role: vagrant_install
-      tags: install
-    - role: vagrant_provision
-      tags: provision
+    - role: vagrant
+ 

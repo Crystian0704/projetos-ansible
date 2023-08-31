@@ -3,5 +3,5 @@
   hosts: vault
   become: true
   roles:
-    - role: vault_install
+    - role: vault
       tags: install
