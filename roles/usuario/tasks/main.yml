@@ -8,15 +8,6 @@
     shell: /bin/bash
   notify: Reinicia o lightdm
 
-  handlers:
-  - name: Reinicia o lightdm
-    service:
-      name: lightdm
-      state: restarted
-      enabled: yes
-    become: yes
-    become_user: root
-
 - name: Instala as dependências
   apt:
     name:
@@ -32,9 +23,7 @@
     - qutebrowser
     - libxrandr-dev
     - sudo
+    - git
     state: present
   become: yes
   become_user: root
-
-
-
