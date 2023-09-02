@@ -16,10 +16,5 @@
       name:
         - google-chrome-stable
 
-  - name: Instala VScode
-    apt:
-      deb: https://go.microsoft.com/fwlink/?LinkID=760868
-      state: present
-    become: yes
 
   

@@ -2,8 +2,7 @@
   block:
   - name: Instala as dependências
     apt:
-      name:
-      - tmux
+      name: tmux
       state: present
     become: yes
     become_user: root
@@ -11,7 +10,6 @@
   - name: Copia configuração do tmux
     copy:
       src: tmux_config
-      dest: /home/{{ user }}/.tmux.conf
-      owner: "{{ user }}"
-      group: "{{ user }}"
-      mode: 0744
+      dest: /home/{{ usuario }}/.tmux.conf
+      owner: "{{ usuario }}"
+      group: "{{ usuario }}"

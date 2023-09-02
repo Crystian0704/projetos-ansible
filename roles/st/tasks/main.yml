@@ -1,3 +1,10 @@
+- name: Remove diretório do st
+  file:
+    path: "/home/{{ usuario }}/.config/suckless/st"
+    state: absent
+  become: yes
+  become_user: root
+
 - name: Faz o clone do repositório do st
   git:
     repo: https://git.suckless.org/st
@@ -6,6 +13,29 @@
     force: yes
   become: yes
   become_user: "{{ usuario }}"
+
+- name: Baixa os patches
+  uri:
+    url: "{{ item.src }}"
+    dest: "/home/{{ usuario }}/.config/suckless/st/{{ item.filename }}"
+    owner: "{{ usuario }}"
+    group: "{{ usuario }}"
+  loop:
+    - {
+        src: "https://st.suckless.org/patches/dracula/st-dracula-0.8.5.diff",
+        filename: "st-dracula-0.8.5.diff",
+      }
+
+    - {
+        src: "https://st.suckless.org/patches/line_snap_delimiter/st-line_snap_delimiter-3bd7e43.diff",
+        filename: "st-line_snap_delimiter-3bd7e43.diff",
+      }
+
+- name: Aplica os patches
+  shell: |
+    cd "/home/{{ usuario }}/.config/suckless/st"
+    patch < st-dracula-0.8.5.diff
+    patch < st-line_snap_delimiter-3bd7e43.diff
 
 - name: Copia arquivo de configuração do st
   copy:
@@ -16,7 +46,7 @@
 
 - name: Compila o st
   shell: |
+    rm -rf "/usr/local/bin/st"
     cd "/home/{{ usuario }}/.config/suckless/st"
     make
-    make clean install
-  
+    make install

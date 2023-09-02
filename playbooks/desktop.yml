@@ -6,17 +6,24 @@
     - role: usuario
       tags: ['usuario']
     - role: dwm
-      tags: ['dwm']
+      tags: ['dwm','wm']
     - role: st
-      tags: ['st']
+      tags: ['st','wm']
     - role: dmenu
-      tags: ['dmenu']
+      tags: ['dmenu','wm']
     - role: slock
-      tags: ['slock']
+      tags: ['slock','wm']
     - role: dwmblocks
-      tags: ['dwmblocks']
+      tags: ['dwmblocks','wm']
     - role: fontes
-      tags: ['fontes']
+      tags: ['fontes','wm']
+    - role: tmux
+      tags: ['tmux','wm']
+    - role: chrome
+      tags: ['chrome']
+    - role: vscode
+      tags: ['vscode']
+    
    
 
 

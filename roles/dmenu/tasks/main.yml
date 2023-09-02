@@ -1,3 +1,10 @@
+- name: Remove diretório do dmenu
+  file:
+    path: "/home/{{ usuario }}/.config/suckless/dmenu"
+    state: absent
+  become: yes
+  become_user: root
+
 - name: Faz o clone do repositório do dmenu
   git:
     repo: https://git.suckless.org/dmenu
@@ -46,7 +53,8 @@
 
 - name: Compila o dmenu
   shell: |
+    rm -rf "/usr/local/bin/dmenu"
     cd "/home/{{ usuario }}/.config/suckless/dmenu"
     make
-    make clean install
+    make install
 

@@ -1,3 +1,10 @@
+- name: Remove diretório do slock
+  file:
+    path: "/home/{{ usuario }}/.config/suckless/slock"
+    state: absent
+  become: yes
+  become_user: root
+
 - name: Clona o repositório slock
   git:
     repo: https://git.suckless.org/slock
@@ -9,6 +16,7 @@
 
 - name: Compila o slock
   shell: |
+    rm -rf "/usr/local/bin/slock"
     cd /home/{{ usuario }}/.config/suckless/slock
     make
     make install

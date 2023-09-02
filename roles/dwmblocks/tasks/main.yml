@@ -1,3 +1,10 @@
+- name: Remove diretório do dwmblocks
+  file:
+    path: "/home/{{ usuario }}/.config/suckless/dwmblocks"
+    state: absent
+  become: yes
+  become_user: root
+
 - name: Clona o repositório do dwmblocks
   git:
     repo: https://github.com/torrinfail/dwmblocks
@@ -9,7 +16,8 @@
 
 - name: Compila o dwmblocks
   shell: |
+    rm -rf "/usr/local/bin/dwmblocks"
     cd /home/{{ usuario }}/.config/suckless/dwmblocks
     make
-    make clean install
+    make install
 
