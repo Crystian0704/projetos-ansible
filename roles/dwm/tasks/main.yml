@@ -57,6 +57,7 @@
         src: "https://dwm.suckless.org/patches/rotatestack/dwm-rotatestack-20161021-ab9571b.diff",
         filename: "dwm-rotatestack-20161021-ab9571b.diff"
       }
+
 - name: Aplica os patches
   shell: |
     cd "/home/{{ usuario }}/.config/suckless/dwm"
@@ -65,7 +66,6 @@
     patch < dwm-cfacts-vanitygaps-6.4_combo.diff
     patch < dwm-centeredwindowname-20200723-f035e1e.diff
     patch < dwm-hide_vacant_tags-6.3.diff
-
 
 - name: Copia o arquivo de configuração
   copy:
