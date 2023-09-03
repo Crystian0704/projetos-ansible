@@ -30,12 +30,17 @@
         src: "https://st.suckless.org/patches/line_snap_delimiter/st-line_snap_delimiter-3bd7e43.diff",
         filename: "st-line_snap_delimiter-3bd7e43.diff",
       }
+    - {
+        src: "https://st.suckless.org/patches/anysize/st-anysize-20220718-baa9357.diff",
+        filename: "st-anysize-20220718-baa9357.diff",
+      }
 
 - name: Aplica os patches
   shell: |
     cd "/home/{{ usuario }}/.config/suckless/st"
     patch < st-dracula-0.8.5.diff
     patch < st-line_snap_delimiter-3bd7e43.diff
+    patch < st-anysize-20220718-baa9357.diff
 
 - name: Copia arquivo de configuração do st
   copy:
