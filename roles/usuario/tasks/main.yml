@@ -46,6 +46,7 @@
     - picom
     - numlockx
     - nitrogen
+    - gh
     state: present
   become: yes
   become_user: root
