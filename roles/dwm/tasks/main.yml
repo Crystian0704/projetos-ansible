@@ -42,10 +42,6 @@
         filename: "dwm-autostart-20161205-bb3bd6f.diff"
       }
     - {
-        src: "https://dwm.suckless.org/patches/centeredwindowname/dwm-centeredwindowname-20200723-f035e1e.diff",
-        filename: "dwm-centeredwindowname-20200723-f035e1e.diff"
-      }
-    - {
         src: "https://dwm.suckless.org/patches/vanitygaps/dwm-cfacts-vanitygaps-6.4_combo.diff",
         filename: "dwm-cfacts-vanitygaps-6.4_combo.diff"
       }
@@ -64,7 +60,6 @@
     patch < dwm-rotatestack-20161021-ab9571b.diff
     patch < dwm-autostart-20161205-bb3bd6f.diff
     patch < dwm-cfacts-vanitygaps-6.4_combo.diff
-    patch < dwm-centeredwindowname-20200723-f035e1e.diff
     patch < dwm-hide_vacant_tags-6.3.diff
 
 - name: Copia o arquivo de configuração
