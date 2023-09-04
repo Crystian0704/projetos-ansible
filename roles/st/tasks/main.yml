@@ -34,6 +34,10 @@
         src: "https://st.suckless.org/patches/anysize/st-anysize-20220718-baa9357.diff",
         filename: "st-anysize-20220718-baa9357.diff",
       }
+    - {
+        src: "https://st.suckless.org/patches/alpha/st-alpha-20220206-0.8.5.diff",
+        filename: "st-alpha-20220206-0.8.5.diff",
+      }
 
 - name: Aplica os patches
   shell: |
@@ -41,6 +45,7 @@
     patch < st-dracula-0.8.5.diff
     patch < st-line_snap_delimiter-3bd7e43.diff
     patch < st-anysize-20220718-baa9357.diff
+    patch < st-alpha-20220206-0.8.5.diff
 
 - name: Copia arquivo de configuração do st
   copy:
