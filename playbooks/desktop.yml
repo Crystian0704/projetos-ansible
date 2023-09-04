@@ -23,6 +23,10 @@
       tags: ['chrome']
     - role: vscode
       tags: ['vscode']
+    - role: trackpad
+      tags: ['trackpad']
+    - role: pyenv
+      tags: ['pyenv']
     
    
 
