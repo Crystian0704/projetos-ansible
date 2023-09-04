@@ -11,6 +11,7 @@
     dest: "/home/{{ usuario }}/.config/suckless/dmenu/"
     clone: yes
     force: yes
+    version: 5.2
   become: yes
   become_user: "{{ usuario }}"
 

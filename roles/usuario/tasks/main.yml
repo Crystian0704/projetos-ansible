@@ -33,7 +33,6 @@
     - lightdm
     - unzip
     - ranger
-    - qutebrowser
     - libxrandr-dev
     - sudo
     - git

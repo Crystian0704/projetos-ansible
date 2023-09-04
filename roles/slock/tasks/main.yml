@@ -11,6 +11,7 @@
     dest: /home/{{ usuario }}/.config/suckless/slock
     clone: yes
     force: yes
+    version: 1.5
   become: yes
   become_user: "{{ usuario }}"
 

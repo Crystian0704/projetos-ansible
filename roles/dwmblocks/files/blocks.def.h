@@ -1,16 +1,13 @@
-// Modify this file to change what commands output to your statusbar, and recompile using the make command.
+//Modify this file to change what commands output to your statusbar, and recompile using the make command.
 static const Block blocks[] = {
-        /*Icon*/        /*Command*/                                   /*Update Interval*/     /*Update Signal*/
-        {"🧠 ", "free -h | awk '/^Mem/ { print $3\"/\"$2 }' | sed s/i//g", 30, 0}, // Usando emoji para representar memória
-
-        {"📅 ", "date '+%d/%m %H:%M'", 5, 0}, // Usando emoji para representar data e alterando o formato da data
-
-        {"🔋 ", "acpi | awk '{ print $4 }' | cut -d, -f1", 30, 0}, // Usando emoji para representar a bateria
-
-        {"🔊 ", "pamixer --get-volume", 5, 0}, // Usando emoji para representar o controle de volume pelo PulseAudio
-
+	/*Icon*/	/*Command*/		/*Update Interval*/	/*Update Signal*/
+	{"",	"sb-clock",	60,	1},
 };
 
-// sets delimiter between status commands. NULL character ('\0') means no delimiter.
-static char delim[] = "|";
-static unsigned int delimLen = 3;
+//Sets delimiter between status commands. NULL character ('\0') means no delimiter.
+static char *delim = " ";
+
+// Have dwmblocks automatically recompile and run when you edit this file in
+// vim with the following line in your vimrc/init.vim:
+
+// autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
