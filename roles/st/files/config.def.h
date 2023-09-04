@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = {"ProFont IIx Nerd Font Propo:size=11:autohint=true:antialias=true", "Noto Color Emoji:pixelsize=11:autohint=true:antialias=true"};
-static int borderpx = 2;
+static char *font = {"ProFont IIx Nerd Font Propo:size=10:autohint=true:antialias=true", "Noto Color Emoji:pixelsize=10:autohint=true:antialias=true"};
+static int borderpx = 3;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -162,7 +162,7 @@ static unsigned int cursorshape = 6;
  */
 
 static unsigned int cols = 80;
-static unsigned int rows = 24;
+static unsigned int rows = 30;
 
 /*
  * Default colour and shape of the mouse cursor
