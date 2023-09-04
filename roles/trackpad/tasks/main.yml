@@ -1,0 +1,9 @@
+- name: Adiciona comandos de click do trackpad
+  copy:
+    src: "50-synaptics.conf"
+    dest: "/etc/X11/xorg.conf.d/"
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  become_user: root

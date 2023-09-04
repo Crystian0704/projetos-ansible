@@ -25,6 +25,11 @@
     - sudo
     - git
     - gpg
+    - pavucontrol
+    - pamixer
+    - acpi
+    - neofetch
+    - htop
     state: present
   become: yes
   become_user: root
