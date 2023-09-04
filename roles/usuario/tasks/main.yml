@@ -8,6 +8,19 @@
     shell: /bin/bash
   notify: Reinicia o lightdm
 
+- name: Crie os diretórios principais
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ usuario }}"
+    group: "{{ usuario }}"
+  loop:
+    - "/home/{{ usuario }}/Downloads"
+    - "/home/{{ usuario }}/Imagens"
+    - "/home/{{ usuario }}/Música"
+    - "/home/{{ usuario }}/Vídeos"
+    - "/home/{{ usuario }}/Documentos"
+
 - name: Instala as dependências
   apt:
     name:
@@ -30,6 +43,9 @@
     - acpi
     - neofetch
     - htop
+    - picom
+    - numlockx
+    - nitrogen
     state: present
   become: yes
   become_user: root
