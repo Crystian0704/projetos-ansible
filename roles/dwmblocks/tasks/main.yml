@@ -14,27 +14,11 @@
   become: yes
   become_user: "{{ usuario }}"
 
-
-- name: Copia o arquivo blocks.def.h, dwmblocks.c e sb-clock
-  copy:
-    src: "{{ item.src }}"
-    dest: "/home/{{ usuario }}/.config/suckless/dwmblocks/"
-    owner: "{{ usuario }}"
-    group: "{{ usuario }}"
-  loop:
-    - {
-        src: "blocks.def.h",
-      }
-    - {
-        src: "dwmblocks.c",
-      }
-    - {
-        src: "sb-clock",
-      }
 - name: Compila o dwmblocks
   shell: |
     rm -rf "/usr/local/bin/dwmblocks"
     cd /home/{{ usuario }}/.config/suckless/dwmblocks
     make
     make install
+
 

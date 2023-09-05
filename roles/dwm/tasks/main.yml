@@ -54,10 +54,7 @@
         src: "https://dwm.suckless.org/patches/rotatestack/dwm-rotatestack-20161021-ab9571b.diff",
         filename: "dwm-rotatestack-20161021-ab9571b.diff"
       }
-    - {
-        src: "https://dwm.suckless.org/patches/statuscmd/dwm-statuscmd-20210405-67d76bd.diff",
-        filename: "dwm-statuscmd-20210405-67d76bd.diff"
-      }
+
 - name: Aplica os patches
   shell: |
     cd "/home/{{ usuario }}/.config/suckless/dwm"
@@ -66,7 +63,7 @@
     patch < dwm-cfacts-vanitygaps-6.4_combo.diff
     patch < dwm-hide_vacant_tags-6.3.diff
 
-- name: Copia os dwm.c e config.def.h
+- name: Copia config.def.h
   copy:
     src: "{{ item.src }}"
     dest: "/home/{{ usuario }}/.config/suckless/dwm/{{ item.filename }}"
@@ -74,14 +71,9 @@
     group: "{{ usuario }}"
   loop:
     - {
-        src: "dwm.c",
-        filename: "dwm.c"
-      }
-    - {
         src: "config.def.h",
         filename: "config.def.h"
       }
-
 
 - name: Compila o dwm
   shell: |
@@ -89,5 +81,6 @@
     cd "/home/{{ usuario }}/.config/suckless/dwm"
     make
     make install
-
+  become: yes
+  become_user: root
 
