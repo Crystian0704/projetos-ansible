@@ -3,11 +3,11 @@ static const Block blocks[] = {
         /*Icon*/        /*Command*/             /*Update Interval*/     /*Update Signal*/
         {" Mem:", "free -h | awk '/^Mem/ { print $3\"/\"$2 }' | sed s/i//g",     30,             0},
          /* Data no formato mes/dia e horas e minuto*/
-        {"", "date '+%m/%d %H:%M'",                                              60,              0},
+        {" ", "date '+%m/%d %H:%M'",                                              60,              0},
 };
 
 //sets delimeter between status commands. NULL character ('\0') means no delimeter.
-static char delim[] = " I ";
+static char delim[] = " | ";
 static unsigned int delimLen = 2;
 
 
