@@ -81,6 +81,5 @@
     cd "/home/{{ usuario }}/.config/suckless/dwm"
     make
     make install
-  become: yes
-  become_user: root
+
 

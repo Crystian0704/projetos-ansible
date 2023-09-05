@@ -14,6 +14,19 @@
   become: yes
   become_user: "{{ usuario }}"
 
+
+- name: Copia blocks.def.h
+  copy:
+    src: "{{ item.src }}"
+    dest: "/home/{{ usuario }}/.config/suckless/dwmblocks/{{ item.filename }}"
+    owner: "{{ usuario }}"
+    group: "{{ usuario }}"
+  loop:
+    - {
+        src: "blocks.def.h",
+        filename: "blocks.def.h"
+      }
+
 - name: Compila o dwmblocks
   shell: |
     rm -rf "/usr/local/bin/dwmblocks"
