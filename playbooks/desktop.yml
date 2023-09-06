@@ -25,10 +25,11 @@
       tags: ['vscode']
     - role: trackpad
       tags: ['trackpad']
-    - role: pyenv
-      tags: ['pyenv']
     - role: slstatus
       tags: ['slstatus']
+    - role: pyenv
+      tags: ['pyenv']
+
     
    
 

@@ -62,8 +62,6 @@
     patch < dwm-autostart-20161205-bb3bd6f.diff
     patch < dwm-cfacts-vanitygaps-6.4_combo.diff
     patch < dwm-hide_vacant_tags-6.3.diff
-    
-    
 
 - name: Copia config.def.h
   copy:

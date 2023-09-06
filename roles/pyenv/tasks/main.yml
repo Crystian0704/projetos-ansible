@@ -19,12 +19,11 @@
   become: yes
   become_user: root
 
-- name: Instala o pyenv
+- name: Instala o pyenv se não estiver instalado
   shell: |
-    curl https://pyenv.run | bash
-  become: yes
-  become_user: "{{ usuario }}"
-
+    if [ ! -d ~/.pyenv ]; then
+      curl https://pyenv.run | bash
+    fi
 - name: Configura o pyenv
   shell: |
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
