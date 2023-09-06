@@ -1,0 +1,35 @@
+- name: Remove diretório do slstatus
+  file:
+    path: "/home/{{ usuario }}/.config/suckless/slstatus"
+    state: absent
+  become: yes
+  become_user: root
+
+- name: Clona o repositório do slstatus
+  git:
+    repo: https://git.suckless.org/slstatus
+    dest: /home/{{ usuario }}/.config/suckless/slstatus
+    clone: yes
+    force: yes
+  become: yes
+  become_user: "{{ usuario }}"
+
+- name: Copia config.def.h
+  copy:
+    src: "{{ item.src }}"
+    dest: "/home/{{ usuario }}/.config/suckless/slstatus/{{ item.filename }}"
+    owner: "{{ usuario }}"
+    group: "{{ usuario }}"
+  loop:
+    - {
+        src: "config.def.h",
+        filename: "config.def.h"
+      }
+
+- name: Compila o slstatus
+  shell: |
+    rm -rf "/usr/local/bin/slstatus"
+    cd /home/{{ usuario }}/.config/suckless/slstatus
+    make
+    make install
+

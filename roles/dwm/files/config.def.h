@@ -8,8 +8,8 @@ static const unsigned int gappov    = 5;       /* vert outer gap between windows
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-char *fonts[]                       = { "ProFont IIx Nerd Font Propo:size=11:autohint=true:antialias=true", "Noto Color Emoji:pixelsize=11:autohint=true:antialias=true" };
-static const char *dmenufont[]      = { "ProFont IIx Nerd Font Propo:size=11:autohint=true:antialias=true", "Noto Color Emoji:pixelsize=11:autohint=true:antialias=true" };
+char *fonts[]                       = { "ProFont IIx Nerd Font Propo:size=10:autohint=true:antialias=true", "Noto Color Emoji:pixelsize=10:autohint=true:antialias=true" };
+static const char *dmenufont[]      = { "ProFont IIx Nerd Font Propo:size=10:autohint=true:antialias=true", "Noto Color Emoji:pixelsize=10:autohint=true:antialias=true" };
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -31,7 +31,6 @@ static const Rule rules[] = {
          */
         /* class      instance    title       tags mask     isfloating   monitor */
         { "Gimp",     NULL,       NULL,       0,            1,           -1 },
-        { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */

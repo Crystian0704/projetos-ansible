@@ -1,6 +1,7 @@
 #!/bin/bash
 
-dwmblocks &
+#dwmblocks &
 picom --experimental-backends &
 numlockx on &
 nitrogen --restore &
+exec slstatus &
