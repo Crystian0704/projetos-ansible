@@ -21,9 +21,8 @@
 
 - name: Instala o pyenv se não estiver instalado
   shell: |
-    if [ ! -d ~/.pyenv ]; then
       curl https://pyenv.run | bash
-    fi
+      
 - name: Configura o pyenv
   shell: |
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
