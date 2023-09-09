@@ -5,52 +5,13 @@
   become: yes
   become_user: root
 
-- name: Faz o clone do repositório do dmenu
+- name: Clona o repositório do dmenu-5.2
   git:
-    repo: https://git.suckless.org/dmenu
-    dest: "/home/{{ usuario }}/.config/suckless/dmenu/"
+    repo: https://github.com/Crystian0704/dmenu.git
+    dest: /home/{{ usuario }}/.config/suckless/dmenu
     clone: yes
-    force: yes
-    version: 5.2
   become: yes
   become_user: "{{ usuario }}"
-
-- name: Baixa os patches
-  uri:
-    url: "{{ item.src }}"
-    dest: "/home/{{ usuario }}/.config/suckless/dmenu/{{ item.filename }}"
-    owner: "{{ usuario }}"
-    group: "{{ usuario }}"
-  loop:
-    - {
-        src: "https://tools.suckless.org/dmenu/patches/center/dmenu-center-5.2.diff",
-        filename: "dmenu-center-5.2.diff"
-      }
-    - {
-        src: "https://tools.suckless.org/dmenu/patches/grid/dmenu-grid-4.9.diff",
-        filename: "dmenu-grid-4.9.diff"
-      }
-    - {
-        src: "https://tools.suckless.org/dmenu/patches/gridnav/dmenu-gridnav-5.2.diff",
-        filename: "dmenu-gridnav-5.2.diff"
-      }
-    - {
-        src: "https://tools.suckless.org/dmenu/patches/dracula/dmenu-dracula-20211128-d78ff08.diff",
-        filename: "dmenu-dracula-20211128-d78ff08.diff"
-      }
-    - {
-        src: "https://tools.suckless.org/dmenu/patches/border/dmenu-border-20230512-0fe460d.diff",
-        filename: "dmenu-border-20230512-0fe460d.diff"
-      }
-
-- name: Aplica os patches
-  shell: |
-    cd "/home/{{ usuario }}/.config/suckless/dmenu"
-    patch < dmenu-center-5.2.diff
-    patch < dmenu-grid-4.9.diff
-    patch < dmenu-border-20230512-0fe460d.diff
-    patch < dmenu-gridnav-5.2.diff
-    patch < dmenu-dracula-20211128-d78ff08.diff
 
 - name: Compila o dmenu
   shell: |
