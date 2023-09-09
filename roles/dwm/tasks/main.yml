@@ -35,6 +35,6 @@
     cd "/home/{{ usuario }}/.config/suckless/dwm"
     make
     make install
-    rm -rf "/home/{{ usuario }}/.config/suckless/dwm"
+    
 
 
