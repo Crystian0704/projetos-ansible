@@ -29,6 +29,8 @@
       tags: ['slstatus']
     - role: pyenv
       tags: ['pyenv']
+    - role: xmenu
+      tags: ['xmenu']
 
     
    

@@ -46,6 +46,7 @@
     - numlockx
     - nitrogen
     - gh
+    - libimlib2-dev
     state: present
   become: yes
   become_user: root

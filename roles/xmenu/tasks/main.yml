@@ -1,0 +1,21 @@
+- name: Remove diretório do xmenu
+  file:
+    path: "/home/{{ usuario }}/.config/suckless/xmenu"
+    state: absent
+  become: yes
+  become_user: root
+
+- name: Clona o repositório do xmenu
+  git:
+    repo: https://github.com/phillbush/xmenu.git
+    dest: /home/{{ usuario }}/.config/suckless/xmenu
+    clone: yes
+  become: yes
+  become_user: "{{ usuario }}"
+
+- name: Compila o dmenu
+  shell: |
+    rm -rf "/usr/local/bin/xmenu"
+    cd "/home/{{ usuario }}/.config/suckless/xmenu"
+    make all
+    make install
