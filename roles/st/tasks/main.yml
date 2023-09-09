@@ -5,55 +5,13 @@
   become: yes
   become_user: root
 
-- name: Faz o clone do repositório do st
+- name: Clona o repositório do st-0.9
   git:
-    repo: https://git.suckless.org/st
-    dest: "/home/{{ usuario }}/.config/suckless/st/"
+    repo: https://github.com/Crystian0704/st.git
+    dest: /home/{{ usuario }}/.config/suckless/st
     clone: yes
-    force: yes
-    version: 0.9
   become: yes
   become_user: "{{ usuario }}"
-
-- name: Baixa os patches
-  uri:
-    url: "{{ item.src }}"
-    dest: "/home/{{ usuario }}/.config/suckless/st/{{ item.filename }}"
-    owner: "{{ usuario }}"
-    group: "{{ usuario }}"
-  loop:
-    - {
-        src: "https://st.suckless.org/patches/dracula/st-dracula-0.8.5.diff",
-        filename: "st-dracula-0.8.5.diff",
-      }
-
-    - {
-        src: "https://st.suckless.org/patches/line_snap_delimiter/st-line_snap_delimiter-3bd7e43.diff",
-        filename: "st-line_snap_delimiter-3bd7e43.diff",
-      }
-    - {
-        src: "https://st.suckless.org/patches/anysize/st-anysize-20220718-baa9357.diff",
-        filename: "st-anysize-20220718-baa9357.diff",
-      }
-    - {
-        src: "https://st.suckless.org/patches/alpha/st-alpha-20220206-0.8.5.diff",
-        filename: "st-alpha-20220206-0.8.5.diff",
-      }
-
-- name: Aplica os patches
-  shell: |
-    cd "/home/{{ usuario }}/.config/suckless/st"
-    patch < st-dracula-0.8.5.diff
-    patch < st-line_snap_delimiter-3bd7e43.diff
-    patch < st-anysize-20220718-baa9357.diff
-    patch < st-alpha-20220206-0.8.5.diff
-
-- name: Copia arquivo de configuração do st
-  copy:
-    src: "config.def.h"
-    dest: "/home/{{ usuario }}/.config/suckless/st/"
-    owner: "{{ usuario }}"
-    group: "{{ usuario }}"
 
 - name: Compila o st
   shell: |
