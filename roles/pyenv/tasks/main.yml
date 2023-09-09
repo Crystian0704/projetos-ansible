@@ -19,9 +19,15 @@
   become: yes
   become_user: root
 
+- name: Verificar se o diretório .pyenv existe
+  stat:
+    path: "/home/{{ usuario }}/.pyenv"
+  register: resultado_stat
+
 - name: Instala o pyenv se não estiver instalado
   shell: |
       curl https://pyenv.run | bash
+  when: resultado_stat.stat.exists == False
       
 - name: Configura o pyenv
   shell: |
