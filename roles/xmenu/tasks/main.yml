@@ -21,3 +21,5 @@
     make install
     cp "/home/{{ usuario }}/.config/suckless/xmenu/examples/xmenu.sh" "/usr/local/bin/xmenu_iniciar"
     chmod +x "/usr/local/bin/xmenu_iniciar"
+    chown {{ usuario }}:{{ usuario }} "/usr/local/bin/xmenu_iniciar"
+    chown {{ usuario }}:{{ usuario }} "/usr/local/bin/xmenu"
