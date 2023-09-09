@@ -19,3 +19,5 @@
     cd "/home/{{ usuario }}/.config/suckless/xmenu"
     make all
     make install
+    cp "/home/{{ usuario }}/.config/suckless/xmenu/examples/xmenu.sh" "/usr/local/bin/xmenu_iniciar"
+    chmod +x "/usr/local/bin/xmenu_iniciar"
