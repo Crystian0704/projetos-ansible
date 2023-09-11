@@ -21,6 +21,11 @@
     - "/home/{{ usuario }}/Vídeos"
     - "/home/{{ usuario }}/Documentos"
 
+- name: Adiciona repositórios keepass "ppa:phoerious/keepassxc"
+  apt_repository:
+    repo: "ppa:phoerious/keepassxc"
+    state: present
+  
 - name: Instala as dependências
   apt:
     name:
@@ -48,6 +53,7 @@
     - gh
     - jgmenu
     - network-manager-gnome
+    - keepassxc
     state: present
   become: yes
   become_user: root
