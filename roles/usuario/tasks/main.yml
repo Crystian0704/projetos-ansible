@@ -22,13 +22,9 @@
     - "/home/{{ usuario }}/Documentos"
 
 - name: Adiciona repositórios keepass "phoerious/keepassxc"
-  apt_repository:
-    repo: deb http://ppa.launchpad.net/phoerious/keepassxc/ubuntu focal main
-    state: present
-    filename: phoerious-keepassxc
-    update_cache: yes
+  shell: |
+    add-apt-repository ppa:phoerious/keepassxc
 
-  
 - name: Instala as dependências
   apt:
     name:
