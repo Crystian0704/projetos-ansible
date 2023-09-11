@@ -1,0 +1,8 @@
+- name: Altera permissões do diretório .config
+  file:
+    path: "/home/{{ usuario }}/.config"
+    owner: "{{ usuario }}"
+    group: "{{ usuario }}"
+    mode: 0755
+  
+  

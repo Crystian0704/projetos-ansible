@@ -25,6 +25,8 @@
       tags: ['trackpad']
     - role: slstatus
       tags: ['slstatus']
+    - role: permissions
+      tags: ['permissions']
     - role: pyenv
       tags: ['pyenv']
 
