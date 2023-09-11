@@ -10,8 +10,7 @@
     repo: https://github.com/Crystian0704/st.git
     dest: /home/{{ usuario }}/.config/suckless/st
     clone: yes
-  become: yes
-  become_user: "{{ usuario }}"
+
 
 - name: Compila o st
   shell: |

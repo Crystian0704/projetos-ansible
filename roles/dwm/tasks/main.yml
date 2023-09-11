@@ -41,8 +41,6 @@
     repo: https://github.com/Crystian0704/dwm.git
     dest: /home/{{ usuario }}/.config/suckless/dwm
     clone: yes
-  become: yes
-  become_user: "{{ usuario }}"
 
 - name: Compila o dwm
   shell: |

@@ -47,11 +47,12 @@
     - nitrogen
     - gh
     - jgmenu
+    - network-manager-gnome
     state: present
   become: yes
   become_user: root
 
-- name: Permite usuario desligar e reiniciar usando polkit
+- name: Permite usuario desligar e reiniciar usando sudo sem senha
   lineinfile:
     path: /etc/sudoers
     line: "{{ usuario }} ALL=(root) NOPASSWD: /sbin/poweroff, /sbin/reboot"

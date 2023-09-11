@@ -12,8 +12,6 @@
     clone: yes
     force: yes
     version: 1.5
-  become: yes
-  become_user: "{{ usuario }}"
 
 - name: Compila o slock
   shell: |

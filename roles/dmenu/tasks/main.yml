@@ -10,8 +10,6 @@
     repo: https://github.com/Crystian0704/dmenu.git
     dest: /home/{{ usuario }}/.config/suckless/dmenu
     clone: yes
-  become: yes
-  become_user: "{{ usuario }}"
 
 - name: Compila o dmenu
   shell: |
