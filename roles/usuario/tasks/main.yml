@@ -20,10 +20,7 @@
     - "/home/{{ usuario }}/Música"
     - "/home/{{ usuario }}/Vídeos"
     - "/home/{{ usuario }}/Documentos"
-
-- name: Adiciona repositórios keepass "phoerious/keepassxc"
-  shell: |
-    add-apt-repository ppa:phoerious/keepassxc
+    - "/home/{{ usuario }}/Projetos"
 
 - name: Instala as dependências
   apt:
