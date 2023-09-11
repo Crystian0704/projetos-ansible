@@ -13,8 +13,6 @@
       tags: ['dmenu','wm']
     - role: slock
       tags: ['slock','wm']
-    - role: dwmblocks
-      tags: ['dwmblocks','wm']
     - role: fontes
       tags: ['fontes','wm']
     - role: tmux
@@ -29,8 +27,7 @@
       tags: ['slstatus']
     - role: pyenv
       tags: ['pyenv']
-    - role: xmenu
-      tags: ['xmenu']
+
 
     
    

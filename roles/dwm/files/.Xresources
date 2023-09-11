@@ -1,0 +1,30 @@
+! Font
+XMenu.faceName:                 DejaVu Sans,Noto Sans CJK JP
+XMenu.faceSize:                 12
+
+! Dracula Theme Colors
+XMenu.background:               #282a36
+XMenu.foreground:               #f8f8f2
+XMenu.activeBackground:         #44475a
+XMenu.activeForeground:         #f8f8f2
+XMenu.separatorColor:           #6272a4
+XMenu.borderColor:              #6272a4
+XMenu.borderWidth:              1
+
+! 3D/Motif-like relief
+XMenu.shadowThickness:          1
+XMenu.topShadowColor:           #f8f8f2
+XMenu.bottomShadowColor:        #44475a
+XMenu.middleShadowColor:        #282a36
+
+! Menu alignment
+XMenu.alignment:                right
+
+! Enable torn off menus
+XMenu.tearOff:                  On
+
+! Transparency (note: Dracula theme doesn't typically use transparency)
+XMenu.opacity:                  1.0
+
+! Useless gaps, in pixels (note: Dracula theme doesn't typically use gaps)
+XMenu.gap:                      0

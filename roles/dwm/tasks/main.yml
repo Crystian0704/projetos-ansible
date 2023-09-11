@@ -5,6 +5,21 @@
   become: yes
   become_user: root
 
+- name: Copia o arquivo .Xresources
+  copy:
+    src: .Xresources
+    dest: /home/{{ usuario }}/
+    owner: "{{ usuario }}"
+    group: "{{ usuario }}"
+    mode: 0644
+
+- name: Copia o arquivo xmenu-start.sh e da permissão de execução
+  copy:
+    src: xmenu-start.sh
+    dest: "/usr/local/bin/xmenu-start"
+    mode: 0755
+
+
 - name: Copia o arquivo autostart.sh e da permissão de execução
   copy:
     src: autostart.sh

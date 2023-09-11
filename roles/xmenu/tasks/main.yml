@@ -19,7 +19,10 @@
     cd "/home/{{ usuario }}/.config/suckless/xmenu"
     make all
     make install
-    cp "/home/{{ usuario }}/.config/suckless/xmenu/examples/xmenu.sh" "/usr/local/bin/xmenu_iniciar"
-    chmod +x "/usr/local/bin/xmenu_iniciar"
-    chown {{ usuario }}:{{ usuario }} "/usr/local/bin/xmenu_iniciar"
-    chown {{ usuario }}:{{ usuario }} "/usr/local/bin/xmenu"
+
+- name: Altere as permissões do xmenu
+  file:
+    path: "/usr/local/bin/xmenu"
+    mode: 0755
+  become: yes
+  become_user: root

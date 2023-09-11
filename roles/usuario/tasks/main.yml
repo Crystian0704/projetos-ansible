@@ -46,7 +46,15 @@
     - numlockx
     - nitrogen
     - gh
-    - libimlib2-dev
+    - jgmenu
     state: present
+  become: yes
+  become_user: root
+
+- name: Permite usuario desligar e reiniciar usando polkit
+  lineinfile:
+    path: /etc/sudoers
+    line: "{{ usuario }} ALL=(root) NOPASSWD: /sbin/poweroff, /sbin/reboot"
+    validate: visudo -cf %s
   become: yes
   become_user: root

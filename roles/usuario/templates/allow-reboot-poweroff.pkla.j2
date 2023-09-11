@@ -1,0 +1,6 @@
+[Allow Reboot and Power Off]
+Identity=unix-user:"{{ usuario }}"
+Action=org.freedesktop.consolekit.system.stop;org.freedesktop.consolekit.system.restart
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes

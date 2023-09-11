@@ -28,6 +28,8 @@
   shell: |
       curl https://pyenv.run | bash
   when: resultado_stat.stat.exists == False
+  become: yes
+  become_user: "{{ usuario }}"
       
 - name: Configura o pyenv
   shell: |
