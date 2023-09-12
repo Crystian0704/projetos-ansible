@@ -7,6 +7,8 @@
     password: "$6$vZoglp5i8xTPGdlI$3YVu35FUGUaXw5D8vQv7Y.NKrqK1sO.lJPih5UTKr4OSzdtrUkhjn1HBCiKr9PDG.sO4YnP9OGK/aAS9Svar51"
     shell: /bin/bash
   notify: Reinicia o lightdm
+  become: yes
+  become_user: root
 
 - name: Crie os diretórios principais
   file:
