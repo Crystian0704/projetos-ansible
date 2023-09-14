@@ -1,10 +1,11 @@
 - name: Altera permissões do diretório .config recursivamente
   file:
-    path: "{{ item }}"
+    path: /home/{{ usuario }}/.config
     state: directory
     recurse: yes
     owner: "{{ usuario }}"
     group: "{{ usuario }}"
+
   
   
   
