@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Obtém o valor atual de brilho
+brilho_atual=$(xrandr --verbose | grep -i brightness | awk '{print $2}')
+
+# Calcula o novo valor de brilho com aumento de 10%
+novo_brilho=$(echo "$brilho_atual + 0.1" | bc)
+
+# Atualiza o brilho
+xrandr --output eDP-1 --brightness $novo_brilho
+
+
+ver comando
+
+xbindkeys --multikey
