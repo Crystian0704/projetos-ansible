@@ -1,0 +1,13 @@
+- name: Instala xbindkeys
+  apt:
+    name: xbindkeys
+    state: present
+    update_cache: yes
+
+- name: Copia os scripts para /usr/local/bin
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/bin
+    mode: 0755
+  with_fileglob:
+    - atalho*

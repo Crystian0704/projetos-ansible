@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#dwmblocks &
+nitrogen --restore &
 picom --experimental-backends &
 numlockx on &
-nitrogen --restore &
-exec slstatus &
+xbindkeys &
