@@ -4,10 +4,21 @@
     state: present
     update_cache: yes
 
-- name: Copia os scripts para /usr/local/bin
+- name: Copia .xbindkeysrc
   copy:
-    src: "{{ item }}"
-    dest: /usr/local/bin
+    src: files/.xbindkeysrc
+    dest: "/home/{{ usuario }}/.xbindkeysrc"
+    owner: "{{ usuario }}"
+    group: "{{ usuario }}"
+    mode: 0644
+
+- name: Copia atalho-info-bateria.sh para /usr/local/bin
+  copy:
+    src: files/atalho-info-bateria.sh
+    dest: /usr/local/bin/atalho-info-bateria.sh
+    owner: root
+    group: root
     mode: 0755
-  with_fileglob:
-    - atalho*
+
+- name: Executa xbindkeys
+  command: xbindkeys

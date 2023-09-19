@@ -4,27 +4,19 @@
 "bash /usr/local/bin/atalho-info-bateria.sh"
     Mod4 + F1
 
-# Meta + F3 para Aumentar Brilho
-"bash /usr/local/bin/atalho-controle-brilho.sh XF86MonBrightnessUp"
-   Mod2+Mod4 + F3
+# Increase volume
+"pactl set-sink-volume @DEFAULT_SINK@ +1000"
+   XF86AudioRaiseVolume
 
-# Meta + F2 para Diminuir Brilho
-"bash /usr/local/bin/atalho-controle-brilho.sh XF86MonBrightnessDown"
-   Mod2+Mod4 + F2
+# Decrease volume
+"pactl set-sink-volume @DEFAULT_SINK@ -1000"
+   XF86AudioLowerVolume
 
-# Meta + F8 para Aumentar Volume
-"bash /usr/local/bin/atalho-controle-volume.sh XF86AudioRaiseVolume"
-   Mod2+Mod4 + F8
+# Mute volume
+"pactl set-sink-mute @DEFAULT_SINK@ toggle"
+   XF86AudioMute
 
-# Meta + F7 para Diminuir Volume
-"bash /usr/local/bin/atalho-controle-volume.sh XF86AudioLowerVolume"
-   Mod2+Mod4 + F7
-
-# Meta + F6 para Mudo
-"bash /usr/local/bin/atalho-controle-volume.sh XF86AudioMute"
-   Mod2+Mod4 + F6
-
-# Meta + F5 para Mudo do Microfone
-"bash /usr/local/bin/atalho-controle-volume.sh XF86AudioMicMute"
-   Mod2+Mod4 + F5
+# Mute microphone
+"pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+   XF86AudioMicMute
 
