@@ -1,0 +1,91 @@
+
+PLAY [Executa as roles para configuração do desktop] ***************************
+
+TASK [dwm : Remove diretório do dwm] *******************************************
+changed: [localhost]
+
+TASK [dwm : Copia o arquivo .Xresources] ***************************************
+ok: [localhost]
+
+TASK [dwm : Copia o arquivo xmenu-start.sh e da permissão de execução] *********
+ok: [localhost]
+
+TASK [dwm : Copia o arquivo autostart.sh e da permissão de execução] ***********
+ok: [localhost]
+
+TASK [dwm : Copia o arquivo dwm.desktop] ***************************************
+ok: [localhost]
+
+TASK [dwm : Clona o repositório do dwm-6.4] ************************************
+changed: [localhost]
+
+TASK [dwm : Compila o dwm] *****************************************************
+fatal: [localhost]: FAILED! => changed=true 
+  cmd: |-
+    rm -rf "/usr/local/bin/dwm"
+    cd "/home/usuarios/.config/suckless/dwm"
+    make
+    make install
+  delta: '0:00:00.274005'
+  end: '2023-09-14 13:29:40.976490'
+  msg: non-zero return code
+  rc: 2
+  start: '2023-09-14 13:29:40.702485'
+  stderr: |-
+    In file included from dwm.c:282:
+    config.h:79:71: warning: initialization of ‘const char *’ from incompatible pointer type ‘const char **’ [-Wincompatible-pointer-types]
+       79 | static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+          |                                                                       ^~~~~~~~~
+    config.h:79:71: note: (near initialization for ‘dmenucmd[4]’)
+    config.h:143:46: error: ‘TAG’ undeclared here (not in a function)
+      143 |         { MODKEY, Button4, view, {.ui = 1 << TAG} },
+          |                                              ^~~
+    dwm.c: In function ‘setup’:
+    dwm.c:1650:38: warning: passing argument 2 of ‘drw_fontset_create’ from incompatible pointer type [-Wincompatible-pointer-types]
+     1650 |         if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
+          |                                      ^~~~~
+          |                                      |
+          |                                      char **
+    In file included from dwm.c:44:
+    drw.h:35:47: note: expected ‘const char **’ but argument is of type ‘char **’
+       35 | Fnt *drw_fontset_create(Drw* drw, const char *fonts[], size_t fontcount);
+          |                                   ~~~~~~~~~~~~^~~~~~~
+    make: *** [Makefile:18: dwm.o] Erro 1
+    In file included from dwm.c:282:
+    config.h:79:71: warning: initialization of ‘const char *’ from incompatible pointer type ‘const char **’ [-Wincompatible-pointer-types]
+       79 | static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+          |                                                                       ^~~~~~~~~
+    config.h:79:71: note: (near initialization for ‘dmenucmd[4]’)
+    config.h:143:46: error: ‘TAG’ undeclared here (not in a function)
+      143 |         { MODKEY, Button4, view, {.ui = 1 << TAG} },
+          |                                              ^~~
+    dwm.c: In function ‘setup’:
+    dwm.c:1650:38: warning: passing argument 2 of ‘drw_fontset_create’ from incompatible pointer type [-Wincompatible-pointer-types]
+     1650 |         if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
+          |                                      ^~~~~
+          |                                      |
+          |                                      char **
+    In file included from dwm.c:44:
+    drw.h:35:47: note: expected ‘const char **’ but argument is of type ‘char **’
+       35 | Fnt *drw_fontset_create(Drw* drw, const char *fonts[], size_t fontcount);
+          |                                   ~~~~~~~~~~~~^~~~~~~
+    make: *** [Makefile:18: dwm.o] Erro 1
+  stderr_lines: <omitted>
+  stdout: |-
+    dwm build options:
+    CFLAGS   = -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION="6.4" -DXINERAMA
+    LDFLAGS  = -L/usr/X11R6/lib -lX11 -lXinerama -lfontconfig -lXft
+    CC       = cc
+    cp config.def.h config.h
+    cc -c -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\"6.4\" -DXINERAMA drw.c
+    cc -c -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\"6.4\" -DXINERAMA dwm.c
+    dwm build options:
+    CFLAGS   = -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION="6.4" -DXINERAMA
+    LDFLAGS  = -L/usr/X11R6/lib -lX11 -lXinerama -lfontconfig -lXft
+    CC       = cc
+    cc -c -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\"6.4\" -DXINERAMA dwm.c
+  stdout_lines: <omitted>
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=6    changed=2    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+

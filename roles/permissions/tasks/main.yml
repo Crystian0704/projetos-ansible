@@ -5,7 +5,6 @@
     recurse: yes
     owner: "{{ usuario }}"
     group: "{{ usuario }}"
-
   
   
   
